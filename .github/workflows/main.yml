@@ -13,6 +13,9 @@ jobs:
     - name: terrraform init
       uses: actions/checkout@main
 
+    - name: Allow PowerShell scripts
+      run: Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+      
     - name: print message
       run: echo "hello bhai!!!"
    
