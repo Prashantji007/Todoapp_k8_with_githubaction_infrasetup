@@ -10,12 +10,14 @@ jobs:
     name: terraform initializationaca
     runs-on: raja:rana
     steps: 
-    - name: terrraform init
+    - name: Checkout to repo
       uses: actions/checkout@main
-
-    - name: Allow PowerShell scripts
-      run: Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
       
-    - name: print message
-      run: echo "hello bhai!!!"
+    - name: Install Terraform
+      uses: little-core-labs/install-terraform@v2.0.0
+      with:
+        version: 1.13.0
+          
+
+    
    
