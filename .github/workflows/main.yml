@@ -17,12 +17,12 @@ jobs:
       uses: Azure/login@v2.3.0
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
-        
-    - name: Install Terraform
-      uses: little-core-labs/install-terraform@v2.0.0
+
+    - name: Terraform Installation
+      uses: hashicorp/setup-terraform@v3
       with:
-        version: 1.13.0
-        
+        terraform_version: "1.1.7"
+   
     - name: Terraform init azurerm backend
       uses: ahmedig/terraform-azurerm-backend@v4
       with:
