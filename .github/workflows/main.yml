@@ -39,6 +39,11 @@ jobs:
     needs: terraforminit
 
     steps:
+    - name: Terraform Installation
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.1.7"
+       
     - name: Terraform Init
       id: init
       run: terraform init -input=false
