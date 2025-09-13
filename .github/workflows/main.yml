@@ -51,7 +51,7 @@ jobs:
 
 
     - name: Check Terraform files
-      run: dir Environments/dev
+      run: dir repo/Environments/dev
       
     - name: Terraform Init
       id: init
