@@ -12,8 +12,6 @@ jobs:
     steps: 
     - name: Checkout to repo
       uses: actions/checkout@v3
-      with:
-       path: repo
       
     - name: Azure Login
       uses: Azure/login@v2.3.0
@@ -51,22 +49,22 @@ jobs:
 
 
     - name: Check Terraform files
-      run: dir repo/Environments/dev
+      run: dir Environments/dev
       
     - name: Terraform Init
       id: init
       run: terraform init -input=false
-      working-directory: repo/Environments/dev
+      working-directory: Environments/dev
 
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
-      working-directory: repo/Environments/dev
+      working-directory: Environments/dev
     
     - name: Terraform Plan
       id: plan
       run: terraform plan -no-color -input=false
-      working-directory: repo/Environments/dev
+      working-directory: Environments/dev
       continue-on-error: true
             
         
