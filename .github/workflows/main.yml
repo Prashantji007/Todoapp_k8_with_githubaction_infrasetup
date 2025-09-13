@@ -31,6 +31,7 @@ jobs:
         container_name: teeraformtfstate
         storage_account_name: backendversioning
         file_name: versioning
+        subscription_id: ${{fromJson(secrets.AZURE_CREDENTIALS).subscriptionId}}
               
         
     
