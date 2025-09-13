@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     steps: 
     - name: Checkout to repo
-      uses: actions/checkout@main
+      uses: actions/checkout@v3
       
     - name: Azure Login
       uses: Azure/login@v2.3.0
@@ -50,17 +50,17 @@ jobs:
     - name: Terraform Init
       id: init
       run: terraform init -input=false
-      working-directory: Environments/dev
+      working-directory: Todoapp_k8_with_githubaction_infrasetup/Environments/dev
 
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
-      working-directory: Environments/dev
+      working-directory: Todoapp_k8_with_githubaction_infrasetup/Environments/dev
     
     - name: Terraform Plan
       id: plan
       run: terraform plan -no-color -input=false
-      working-directory: Environments/dev
+      working-directory: Todoapp_k8_with_githubaction_infrasetup/Environments/dev
       continue-on-error: true
             
         
