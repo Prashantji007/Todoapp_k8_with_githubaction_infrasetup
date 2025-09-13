@@ -32,7 +32,26 @@ jobs:
         storage_account_name: backendversioning
         file_name: versioning
         subscription_id: ${{fromJson(secrets.AZURE_CREDENTIALS).subscriptionId}}
-              
+
+  Terrforminitandplan:
+    name: terraformintandplan
+    runs-on: windows-latest
+    needs: terraforminit
+
+    steps:
+    - name: Terraform Init
+      id: init
+      run: terraform init -input=false
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+    
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -no-color -input=false
+      continue-on-error: true
+            
         
     
         
