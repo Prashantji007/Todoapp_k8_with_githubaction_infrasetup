@@ -11,7 +11,7 @@ jobs:
     runs-on: raja:rana
     steps: 
     - name: Checkout to repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5.0.0
       
     - name: Azure Login
       uses: Azure/login@v2.3.0
@@ -22,18 +22,23 @@ jobs:
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: "1.1.7"
+        
+    - name: Allow PowerShell scripts
+      run: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+      shell: powershell
+
       
     - name: Terraform Init
       id: init
       run: terraform init -input=false
       working-directory: Environments/dev
-      shell: bash
+     
 
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
       working-directory: Environments/dev
-      shell: bash
+      
    
   Terrforminitandplan:
     name: terraformintandplan
@@ -45,15 +50,14 @@ jobs:
       id: init
       run: terraform init -input=false
       working-directory: Environments/dev
-      shell: bash
+      
       
     - name: Terraform Plan
       id: plan
       run: terraform plan -no-color -input=false
       working-directory: Environments/dev
       continue-on-error: true
-      shell: bash
-            
+      
         
     
         
