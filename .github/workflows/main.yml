@@ -22,31 +22,9 @@ jobs:
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: "1.1.7"
-   
-    - name: Terraform init azurerm backend
-      uses: ahmedig/terraform-azurerm-backend@v4
-      with:
-        azure_credentials: ${{secrets.AZURE_CREDENTIALS}}
-        resource_group_name: Test
-        container_name: teeraformtfstate
-        storage_account_name: backendversioning
-        file_name: versioning
-        subscription_id: ${{fromJson(secrets.AZURE_CREDENTIALS).subscriptionId}}
-
-  Terrforminitandplan:
-    name: terraformintandplan
-    runs-on: windows-latest
-    needs: terraforminit
-
-    steps:
-    - name: Terraform Installation
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: "1.1.7"
         
     - name: List root folder
       run: dir
-
 
     - name: Check Terraform files
       run: dir Environments/dev
@@ -60,7 +38,18 @@ jobs:
       id: validate
       run: terraform validate -no-color
       working-directory: Environments/dev
+   
+  Terrforminitandplan:
+    name: terraformintandplan
+    runs-on: windows-latest
+    needs: terraforminit
     
+    steps:
+    - name: Terraform Init
+      id: init
+      run: terraform init -input=false
+      working-directory: Environments/dev
+      
     - name: Terraform Plan
       id: plan
       run: terraform plan -no-color -input=false
