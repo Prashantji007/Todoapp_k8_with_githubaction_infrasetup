@@ -22,22 +22,18 @@ jobs:
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: "1.1.7"
-        
-    # - name: List root folder
-    #   run: dir
-
-    # - name: Check Terraform files
-    #   run: dir Environments/dev
       
     - name: Terraform Init
       id: init
       run: terraform init -input=false
       working-directory: Environments/dev
+      shell: bash
 
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
       working-directory: Environments/dev
+      shell: bash
    
   Terrforminitandplan:
     name: terraformintandplan
@@ -49,12 +45,14 @@ jobs:
       id: init
       run: terraform init -input=false
       working-directory: Environments/dev
+      shell: bash
       
     - name: Terraform Plan
       id: plan
       run: terraform plan -no-color -input=false
       working-directory: Environments/dev
       continue-on-error: true
+      shell: bash
             
         
     
