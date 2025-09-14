@@ -8,7 +8,7 @@ on:
 jobs:
   terraforminit:
     name: terraform initializationaca
-    runs-on: windows-latest
+    runs-on: raja:rana
     steps: 
     - name: Checkout to repo
       uses: actions/checkout@v3
@@ -41,7 +41,7 @@ jobs:
    
   Terrforminitandplan:
     name: terraformintandplan
-    runs-on: windows-latest
+    runs-on: raja:rana
     needs: terraforminit
     
     steps:
