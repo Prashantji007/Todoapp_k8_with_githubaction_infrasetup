@@ -23,21 +23,23 @@ jobs:
       with:
         terraform_version: "1.1.7"
         
-    - name: Allow PowerShell scripts
-      run: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
-      shell: powershell
+    # - name: Allow PowerShell scripts
+    #   run: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+    #   shell: powershell
 
       
     - name: Terraform Init
       id: init
       run: terraform init -input=false
       working-directory: Environments/dev
+      shell: pwsh
      
 
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
       working-directory: Environments/dev
+      shell: pwsh
       
    
   Terrforminitandplan:
@@ -50,6 +52,7 @@ jobs:
       id: init
       run: terraform init -input=false
       working-directory: Environments/dev
+      shell: pwsh
       
       
     - name: Terraform Plan
@@ -57,6 +60,7 @@ jobs:
       run: terraform plan -no-color -input=false
       working-directory: Environments/dev
       continue-on-error: true
+      shell: pwsh
       
         
     
