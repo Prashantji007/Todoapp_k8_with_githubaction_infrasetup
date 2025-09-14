@@ -25,13 +25,15 @@ jobs:
 
     - name: Terraform Init
       id: init
-      run: powershell -ExecutionPolicy Bypass -Command "terraform init -input=false"
+      run: terraform init -input=false
       working-directory: Environments/dev
+      shell: cmd
 
     - name: Terraform Validate
       id: validate
-      run: powershell -ExecutionPolicy Bypass -Command "terraform validate -no-color"
+      run: terraform validate -no-color
       working-directory: Environments/dev
+      shell: cmd
       
 
   terraforminitandplan:
@@ -42,11 +44,13 @@ jobs:
     steps:
     - name: Terraform Init
       id: init
-      run: powershell -ExecutionPolicy Bypass -Command "terraform init -input=false"
+      run: terraform init -input=false
       working-directory: Environments/dev
+      shell: cmd
 
     - name: Terraform Plan
       id: plan
-      run: powershell -ExecutionPolicy Bypass -Command "terraform plan -no-color -input=false"
+      run: terraform plan -no-color -input=false
       working-directory: Environments/dev
       continue-on-error: true
+      shell: cmd
