@@ -7,7 +7,7 @@ on:
 
 jobs:
   terraforminit:
-    name: terraform initializationaca
+    name: terraform initialization
     runs-on: raja:rana
     steps: 
     - name: Checkout to repo
@@ -22,47 +22,31 @@ jobs:
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: "1.1.7"
-        
-    # - name: Allow PowerShell scripts
-    #   run: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
-    #   shell: powershell
 
-      
     - name: Terraform Init
       id: init
-      run: terraform init -input=false
+      run: powershell -ExecutionPolicy Bypass -Command "terraform init -input=false"
       working-directory: Environments/dev
-      shell: pwsh
-     
 
     - name: Terraform Validate
       id: validate
-      run: terraform validate -no-color
+      run: powershell -ExecutionPolicy Bypass -Command "terraform validate -no-color"
       working-directory: Environments/dev
-      shell: pwsh
       
-   
-  Terrforminitandplan:
-    name: terraformintandplan
+
+  terraforminitandplan:
+    name: terraform init and plan
     runs-on: raja:rana
     needs: terraforminit
     
     steps:
     - name: Terraform Init
       id: init
-      run: terraform init -input=false
+      run: powershell -ExecutionPolicy Bypass -Command "terraform init -input=false"
       working-directory: Environments/dev
-      shell: pwsh
-      
-      
+
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color -input=false
+      run: powershell -ExecutionPolicy Bypass -Command "terraform plan -no-color -input=false"
       working-directory: Environments/dev
       continue-on-error: true
-      shell: pwsh
-      
-        
-    
-        
-       
