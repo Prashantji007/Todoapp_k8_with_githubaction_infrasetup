@@ -89,7 +89,6 @@ jobs:
       id: plan
       run: terraform plan -no-color -input=false
       working-directory: Environments/dev
-      continue-on-error: true
       shell: cmd
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
