@@ -22,13 +22,13 @@ module "mssql_server" {
     depends_on = [ module.rg ]
     source = "../../Modules/azurerm_mssql_server"
     mssql_server  = var.mod_mssql_server
+    mssql_admin_password = var.mod_mssql_db_password
 }
 
 module "mssql_db" {
   depends_on = [module.mssql_server, module.rg]
   source     = "../../Modules/azurerm_mssql_DB"
-
-  mssql_db = {
+    mssql_db = {
     for k, v in var.mod_mssql_db :
     k => merge(v, {
       server_id = module.mssql_server.mssql_server_ids["mssql1"]

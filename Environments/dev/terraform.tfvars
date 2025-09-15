@@ -11,7 +11,7 @@ mod_rgs = {
 
 mod_aks = {
     aks1 = {
-        aks_name             = "aks-todoapp-dev"
+        aks_name             = "aks-todoapp-dev01"
         location             = "centralindia"
         resource_group_name  = "rg-todoapp-dev"
         tags = {
@@ -23,7 +23,7 @@ mod_aks = {
 
 mod_acr = {
     acr1 = {
-        acr_name             = "acrtodoappdev"
+        acr_name             = "acrtodoappdev01"
         location             = "centralindia"
         resource_group_name  = "rg-todoapp-dev"
     } 
