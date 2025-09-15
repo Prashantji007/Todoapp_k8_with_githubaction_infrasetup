@@ -9,6 +9,10 @@ jobs:
   terraforminit:
     name: terraform initialization
     runs-on: raja:rana
+    permissions:              
+      id-token: write          # for OIDC token
+      contents: read           # typical for checking out repo
+
     steps: 
     - name: Checkout to repo
       uses: actions/checkout@v5.0.0
