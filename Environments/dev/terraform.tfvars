@@ -47,7 +47,6 @@ mod_mssql_db = {
         mssql_server_name    = "mssqldbserverdev"
         mssql_db_name        = "sqldbdev"
         sku_name             = "S0"
-        server_id            = module.mssql_server.server_id["mssql1"]
         tags                 = {
       Environment = "Development"
       Owner       = "Prashant"
