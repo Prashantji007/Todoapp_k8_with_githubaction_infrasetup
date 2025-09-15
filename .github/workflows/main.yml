@@ -11,7 +11,7 @@ on:
 
 permissions:              
   id-token: write          # required for OIDC federation
-  contents: read
+  contents: read           # to clone the repo
 
 jobs:
   terraforminit:
