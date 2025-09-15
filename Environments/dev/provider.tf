@@ -5,12 +5,20 @@ terraform {
       version = "4.41.0"
     }
   }
+
+  backend "azurerm" {
+    resource_group_name   = "Test"
+    storage_account_name  = "todoterraformstate"
+    container_name        = "tfstate"
+    key                   = "infra/terraform.tfstate"
+  }
+
 }
 
 provider "azurerm" {
  features {
    
  }
- subscription_id = "1075ec7a-b17a-4f37-bf3f-9d68c4506dc1"
+ subscription_id = "e8adc8a2-d308-4d54-a68d-45a79457a55f"
 }
 
