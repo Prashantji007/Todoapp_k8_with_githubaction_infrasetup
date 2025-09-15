@@ -91,7 +91,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color -input=false
+      run: terraform plan -no-color -input=false -var "mssql_admin_password=$MSSQL_PASSWORD"
       working-directory: Environments/dev
       shell: cmd
       env:
