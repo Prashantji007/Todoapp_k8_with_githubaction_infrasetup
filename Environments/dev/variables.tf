@@ -12,8 +12,11 @@ variable "mod_mssql_db" {
 }
 
 variable "mod_mssql_db_password" {
-  
+  description = "Administrator password for MSSQL servers"
+  type        = string
+  sensitive   = true
 }
+
 variable "mod_kv" {
   
 }

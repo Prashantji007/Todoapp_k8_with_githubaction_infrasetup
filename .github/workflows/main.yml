@@ -91,7 +91,9 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color -input=false -var "mssql_admin_password=$MSSQL_PASSWORD"
+      run: terraform plan -no-color -input=false \
+             -var "mssql_admin_password=$MSSQL_PASSWORD" \
+              -var "mod_mssql_db_password=$MSSQL_PASSWORD"
       working-directory: Environments/dev
       shell: cmd
       env:
@@ -138,7 +140,9 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply --auto-approve -var "mssql_admin_password=$MSSQL_PASSWORD"
+        run: terraform apply --auto-approve \
+              -var "mssql_admin_password=$MSSQL_PASSWORD" \
+              -var "mod_mssql_db_password=$MSSQL_PASSWORD"
         working-directory: Environments/dev
         shell: cmd
         env:
