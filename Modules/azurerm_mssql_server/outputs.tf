@@ -1,3 +1,3 @@
 output "server_id" {
-  value = azurerm_mssql_server.mssql_server_db_todoapp.id
+  value = azurerm_mssql_server.mssql_server_todoapp.id
 }
