@@ -5,7 +5,7 @@ resource "azurerm_mssql_server" "mssql_server_todoapp" {
   location                     = each.value.location
   version                      = "12.0"
   administrator_login          = each.value.administrator_login_username
-  administrator_login_password = var.mssql_admin_password
+  administrator_login_password = each.value.administrator_login_password
   minimum_tls_version          = "1.2"
     tags                         = each.value.tags
 }
