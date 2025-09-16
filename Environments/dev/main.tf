@@ -22,7 +22,6 @@ module "mssql_server" {
     depends_on = [ module.rg ]
     source = "../../Modules/azurerm_mssql_server"
     mssql_server  = var.mod_mssql_server
-    mssql_admin_password = var.mod_mssql_db_password
 }
 
 module "mssql_db" {

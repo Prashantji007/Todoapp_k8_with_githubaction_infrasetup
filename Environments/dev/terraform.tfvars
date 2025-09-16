@@ -35,6 +35,7 @@ mod_mssql_server = {
         location             = "centralindia"
         resource_group_name  = "rg-todoapp-dev"
         administrator_login_username       = "sqladminuser"
+        administrator_login_password       = "Test@12345"
         tags                 = {
       Environment = "Development"
       Owner       = "Prashant"
