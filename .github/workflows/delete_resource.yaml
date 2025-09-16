@@ -12,7 +12,7 @@ jobs:
   terraforminitanddestroy:
       name: terraform init and destroy
       runs-on: raja:rana
-      environment: dev
+      environment: Destory_resource
       if: github.ref == 'refs/heads/main'
      
       steps:
