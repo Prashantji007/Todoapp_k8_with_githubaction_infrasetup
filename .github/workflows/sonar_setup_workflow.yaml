@@ -67,7 +67,8 @@ jobs:
           --set persistence.size=10Gi \
           --set postgresql.enabled=true \
           --set service.type=LoadBalancer \
-          --set monitoringPasscode=${{ env.MONITORING_PASSCODE }}
+          --set monitoringPasscode=${{ env.MONITORING_PASSCODE }} \
+          --set community.enabled=true
 
     # Wait until SonarQube is ready
     - name: Wait for SonarQube
