@@ -91,7 +91,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color -input=false
+      run: terraform plan -no-color -input=false 
       working-directory: Environments/dev
       shell: cmd
       env:
@@ -138,7 +138,7 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply --auto-approve
+        run: terraform apply --auto-approve 
         working-directory: Environments/dev
         shell: cmd
         env:

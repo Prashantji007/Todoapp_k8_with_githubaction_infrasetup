@@ -9,3 +9,4 @@ variable "mssql_server" {
         tags                      = map(string)
     }))
 }
+
