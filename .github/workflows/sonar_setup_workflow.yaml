@@ -52,6 +52,11 @@ jobs:
       run: |
         helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
         helm repo update
+    
+    - name: Generate monitoring passcode
+      run: |
+        echo "MONITORING_PASSCODE=$(openssl rand -hex 16)" >> $GITHUB_ENV
+
 
     # Install or upgrade SonarQube
     - name: Deploy SonarQube
@@ -61,7 +66,11 @@ jobs:
           --set persistence.enabled=true \
           --set persistence.size=10Gi \
           --set postgresql.enabled=true \
-          --set service.type=LoadBalancer
+          --set resources.requests.memory=1Gi \
+          --set resources.limits.memory=2Gi \
+          --set service.type=LoadBalancer \
+          --set monitoringPasscode=${{ env.MONITORING_PASSCODE }} \
+          --set community.enabled=true
 
     # Wait until SonarQube is ready
     - name: Wait for SonarQube

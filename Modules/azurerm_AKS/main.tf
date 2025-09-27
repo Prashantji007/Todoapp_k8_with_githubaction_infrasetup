@@ -8,7 +8,7 @@ resource "azurerm_kubernetes_cluster" "aks_todoapp" {
   default_node_pool {
     name       = "todonp"
     node_count = 1
-    vm_size    = "standard_a2_v2"
+    vm_size    = "Standard_D4s_v3"
   }
 
   identity {
