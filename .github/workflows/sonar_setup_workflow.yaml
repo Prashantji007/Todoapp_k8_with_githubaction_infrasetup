@@ -66,6 +66,8 @@ jobs:
           --set persistence.enabled=true \
           --set persistence.size=10Gi \
           --set postgresql.enabled=true \
+          --set resources.requests.memory=1Gi \
+          --set resources.limits.memory=2Gi \
           --set service.type=LoadBalancer \
           --set monitoringPasscode=${{ env.MONITORING_PASSCODE }} \
           --set community.enabled=true
