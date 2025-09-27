@@ -1,0 +1,74 @@
+name: Deploy SonarQube on AKS
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # Required for OIDC
+  contents: read
+
+env:
+  RESOURCE_GROUP: rg-todoapp-dev
+  CLUSTER_NAME: aks-todoapp-dev01
+  SONAR_NAMESPACE: sonarqube
+  SONAR_RELEASE: sonarqube
+  
+jobs:
+  deploy-sonarqube:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+
+    # 🔹 1. Azure Login (OIDC)
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+
+    # Get AKS credentials
+    - name: Get AKS credentials
+      uses: azure/aks-set-context@v3
+      with:
+        resource-group: ${{ env.RESOURCE_GROUP }}
+        cluster-name: ${{ env.CLUSTER_NAME }}
+
+    # Install Helm
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+    # Create namespace if not exists
+    - name: Create namespace
+      run: |
+        kubectl create namespace ${{ env.SONAR_NAMESPACE }} --dry-run=client -o yaml | kubectl apply -f -
+
+    # Add SonarQube Helm repo
+    - name: Add Helm repo
+      run: |
+        helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
+        helm repo update
+
+    # Install or upgrade SonarQube
+    - name: Deploy SonarQube
+      run: |
+        helm upgrade --install ${{ env.SONAR_RELEASE }} sonarqube/sonarqube \
+          --namespace ${{ env.SONAR_NAMESPACE }} \
+          --set persistence.enabled=true \
+          --set persistence.size=10Gi \
+          --set postgresql.enabled=true \
+          --set service.type=LoadBalancer
+
+    # Wait until SonarQube is ready
+    - name: Wait for SonarQube
+      run: |
+        kubectl rollout status deployment/${{ env.SONAR_RELEASE }} -n ${{ env.SONAR_NAMESPACE }} --timeout=600s
+
+    # Output external IP
+    - name: Get SonarQube service IP
+      run: |
+        kubectl get svc ${{ env.SONAR_RELEASE }} -n ${{ env.SONAR_NAMESPACE }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
