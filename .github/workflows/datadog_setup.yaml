@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      
+
 permissions:
   id-token: write
   contents: read
@@ -55,4 +55,4 @@ jobs:
          helm repo add datadog https://helm.datadoghq.com
          helm install datadog-operator datadog/datadog-operator
          kubectl create secret generic datadog-secret --from-literal api-key=${{secrets.DD_API_KEY}} --from-literal app-key=${{secrets.DD_APP_KEY}} -n datadog
-         kubectl apply -f /datadog/datadog-values.yaml
+         kubectl apply -f datadog/datadog-values.yaml
