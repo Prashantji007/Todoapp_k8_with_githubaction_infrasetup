@@ -1,0 +1,53 @@
+name: SonarQube Scan
+
+on:
+  push:
+    branches:
+      - main
+env:
+  RESOURCE_GROUP: rg-todoapp-dev
+  CLUSTER_NAME: aks-todoapp-dev01
+  datadog_NAMESPACE: datadog
+
+jobs:
+  sonar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+         fetch-depth: 0 
+    
+       # 🔹 1. Azure Login (OIDC)
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+            client-id: ${{ secrets.AZURE_CLIENT_ID }}
+            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+
+        # Get AKS credentials
+      - name: Get AKS credentials
+        uses: azure/aks-set-context@v3
+        with:
+            resource-group: ${{ env.RESOURCE_GROUP }}
+            cluster-name: ${{ env.CLUSTER_NAME }}
+
+        # Install Helm
+      - name: Install Helm
+        run: |
+            curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+        # Create namespace if not exists
+      - name: Create namespace
+        run: |
+            kubectl create namespace ${{ env.datadog_NAMESPACE }} --dry-run=client -o yaml | kubectl apply -f -
+
+
+      # setup datadog
+      - name: Set up Datadog
+        run: |
+         helm repo add datadog https://helm.datadoghq.com
+         helm install datadog-operator datadog/datadog-operator
+         kubectl create secret generic datadog-secret --from-literal api-key=${{secrets.DD_API_KEY}} --from-literal app-key=${{secrets.DD_APP_KEY}} -n datadog
+         kubectl apply -f /datadog/datadog-values.yaml
