@@ -1,4 +1,4 @@
-name: todo_app infra workflow
+name: todo_app infra delete cofiguration
 
 on: 
     workflow_dispatch:
