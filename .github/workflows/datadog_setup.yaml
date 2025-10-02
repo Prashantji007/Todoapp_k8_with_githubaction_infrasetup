@@ -12,7 +12,7 @@ permissions:
 env:
   RESOURCE_GROUP: rg-todoapp-dev
   CLUSTER_NAME: aks-todoapp-dev01
-  datadog_NAMESPACE: datadog
+  DATADOG_NAMESPACE: datadog
 
 jobs:
   datadog-setup:
@@ -20,39 +20,50 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-         fetch-depth: 0 
+          fetch-depth: 0 
     
-       # 🔹 1. Azure Login (OIDC)
+      # 🔹 1. Azure Login (OIDC)
       - name: Azure Login
         uses: azure/login@v1
         with:
-            client-id: ${{ secrets.AZURE_CLIENT_ID }}
-            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-
-        # Get AKS credentials
+      # 🔹 2. Get AKS credentials
       - name: Get AKS credentials
         uses: azure/aks-set-context@v3
         with:
-            resource-group: ${{ env.RESOURCE_GROUP }}
-            cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
 
-        # Install Helm
+      # 🔹 3. Install Helm
       - name: Install Helm
         run: |
-            curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-        # Create namespace if not exists
+      # 🔹 4. Ensure namespace exists
       - name: Create namespace
         run: |
-            kubectl create namespace ${{ env.datadog_NAMESPACE }} --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create namespace ${{ env.DATADOG_NAMESPACE }} --dry-run=client -o yaml | kubectl apply -f -
 
-
-      # setup datadog
+      # 🔹 5. Setup Datadog
       - name: Set up Datadog
         run: |
-         helm repo add datadog https://helm.datadoghq.com
-         helm install datadog-operator datadog/datadog-operator
-         kubectl create secret generic datadog-secret --from-literal api-key=${{secrets.DD_API_KEY}} --from-literal app-key=${{secrets.DD_APP_KEY}} -n datadog
-         kubectl apply -f datadog/datadog-values.yaml
+          helm repo add datadog https://helm.datadoghq.com
+          helm repo update
+
+          # Install/Upgrade Datadog Operator (idempotent)
+          helm upgrade --install datadog-operator datadog/datadog-operator \
+            --namespace ${{ env.DATADOG_NAMESPACE }} \
+            --create-namespace
+
+          # Create/Update Datadog API keys secret
+          kubectl create secret generic datadog-secret \
+            --from-literal api-key=${{ secrets.DD_API_KEY }} \
+            --from-literal app-key=${{ secrets.DD_APP_KEY }} \
+            -n ${{ env.DATADOG_NAMESPACE }} \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+          # Apply Datadog custom values (if you have one)
+          kubectl apply -f datadog/datadog-values.yaml -n ${{ env.DATADOG_NAMESPACE }}
