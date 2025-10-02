@@ -66,4 +66,4 @@ jobs:
             --dry-run=client -o yaml | kubectl apply -f -
 
           # Apply Datadog custom values (if you have one)
-          kubectl apply -f ./datadog/datadog-values.yaml -n ${{ env.DATADOG_NAMESPACE }}
+          kubectl apply -f ./.github/workflows/datadog/datadog-values.yaml -n ${{ env.DATADOG_NAMESPACE }}
