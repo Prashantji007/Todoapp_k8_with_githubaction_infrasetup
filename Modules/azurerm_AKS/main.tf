@@ -9,7 +9,7 @@ resource "azurerm_kubernetes_cluster" "aks_todoapp" {
     name       = "todonp"
     node_count = 1
     vm_size    = "Standard_D4s_v3"
-     temporary_name_for_rotation = "tempnodepool"  # <- Add this
+    temporary_name_for_rotation = "tempnodepool"  # <- Add this
   }
 
   identity {
