@@ -11,7 +11,7 @@ env:
   RESOURCE_GROUP: rg-todoapp-dev
   CLUSTER_NAME: aks-todoapp-dev01
   SONAR_NAMESPACE: sonarqube
-  SONAR_RELEASE: sonarqube
+  SONAR_RELEASE: sonarqube-sonarqube
   
 jobs:
   deploy-sonarqube:
