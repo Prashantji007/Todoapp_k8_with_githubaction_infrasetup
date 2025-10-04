@@ -75,7 +75,7 @@ jobs:
     # Wait until SonarQube is ready
     - name: Wait for SonarQube
       run: |
-        kubectl rollout status deployment/${{ env.SONAR_RELEASE }} -n ${{ env.SONAR_NAMESPACE }} --timeout=600s
+       kubectl rollout status statefulset/sonarqube-sonarqube -n sonarqube --timeout=600s
 
     # Output external IP
     - name: Get SonarQube service IP
