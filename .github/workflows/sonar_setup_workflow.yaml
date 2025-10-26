@@ -11,7 +11,7 @@ env:
   RESOURCE_GROUP: rg-todoapp-dev
   CLUSTER_NAME: aks-todoapp-dev01
   SONAR_NAMESPACE: sonarqube
-  SONAR_RELEASE: sonarqube
+  SONAR_RELEASE: sonarqube-sonarqube
   
 jobs:
   deploy-sonarqube:
@@ -66,8 +66,8 @@ jobs:
           --set persistence.enabled=true \
           --set persistence.size=10Gi \
           --set postgresql.enabled=true \
-          --set resources.requests.memory=1Gi \
-          --set resources.limits.memory=2Gi \
+          --set resources.requests.memory=2Gi \
+          --set resources.limits.memory=4Gi \
           --set service.type=LoadBalancer \
           --set monitoringPasscode=${{ env.MONITORING_PASSCODE }} \
           --set community.enabled=true
@@ -75,7 +75,7 @@ jobs:
     # Wait until SonarQube is ready
     - name: Wait for SonarQube
       run: |
-        kubectl rollout status deployment/${{ env.SONAR_RELEASE }} -n ${{ env.SONAR_NAMESPACE }} --timeout=600s
+       kubectl rollout status statefulset/sonarqube-sonarqube -n sonarqube --timeout=600s
 
     # Output external IP
     - name: Get SonarQube service IP
