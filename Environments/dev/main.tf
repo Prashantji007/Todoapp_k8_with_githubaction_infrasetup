@@ -2,20 +2,20 @@
 
 
 module "rg" {
-    source = "../../Modules/azurerm_rg"
-    rgs  = var.mod_rgs
+  source = "../../Modules/azurerm_rg"
+  rgs    = var.mod_rgs
 }
 
 module "aks" {
-    depends_on = [ module.rg ]
-    source = "../../Modules/azurerm_AKS"
-    aks  = var.mod_aks
+  depends_on = [module.rg]
+  source     = "../../Modules/azurerm_AKS"
+  aks        = var.mod_aks
 }
 
 module "acr" {
-    depends_on = [ module.rg ]
-    source = "../../Modules/azurerm_ACR"
-    acr  = var.mod_acr  
+  depends_on = [module.rg]
+  source     = "../../Modules/azurerm_ACR"
+  acr        = var.mod_acr
 }
 
 # module "mssql_server" {
@@ -40,5 +40,5 @@ module "acr" {
 #     depends_on = [ module.rg ]
 #     source = "../../Modules/azurerm_key_valut"
 #     kv  = var.mod_kv   
-  
+
 # }

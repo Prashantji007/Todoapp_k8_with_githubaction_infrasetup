@@ -3,6 +3,6 @@ resource "azurerm_container_registry" "acr_todoapp" {
   name                = each.value.acr_name
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
-  sku                 = "Premium"
+  sku                 = "Basic"
   admin_enabled       = false
 }
