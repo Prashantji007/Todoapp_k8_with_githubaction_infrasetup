@@ -34,7 +34,6 @@ variable "mod_mssql_server" {
 variable "mod_mssql_db" {
   type = map(object({
     mssql_db_name = string
-    server_id     = string
     tags          = map(string)
   }))
 }
