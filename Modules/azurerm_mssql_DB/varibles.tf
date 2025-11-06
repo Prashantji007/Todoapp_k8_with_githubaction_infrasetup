@@ -3,6 +3,7 @@ variable "mssql_db" {
     type = map(object({
         mssql_db_name = string
         tags          = map(string)
+        server_id = string
     }))
   
 }
