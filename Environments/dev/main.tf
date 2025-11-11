@@ -41,6 +41,19 @@ module "netwokring" {
   vnet = var.mod_networking
 }
 
+module "nsg" {
+  depends_on = [ module.rg,module.netwokring ]
+  source = "../../Modules/NSG"
+  nsg = var.mod_nsg
+  
+}
+
+module "asg" {
+  depends_on = [ module.rg,module.netwokring ]
+  source = "../../Modules/ASG"
+  asg = var.mod_asg
+  
+}
 module "nic" {
   depends_on = [ module.netwokring ]
   source = "../../Modules/NIC"
@@ -49,7 +62,7 @@ module "nic" {
 
 module "vm" {
   depends_on = [ module.rg, module.netwokring, module.nic ]
-  source = "../../Modules/VM_Bastion"
+  source = "../../Modules/VM"
   vms ={
     for k,v in var.mod_vm:
     k => merge(v,{
@@ -57,6 +70,12 @@ module "vm" {
     }) }
 }
 
+
+module "bastion_host" {
+  depends_on = [ module.rg,module.netwokring,module.vm ]
+  source = "../../Modules/Bastion_Host"
+  bastion_host = var.mod_bastion_host
+}
 # module "kv" {
 #     depends_on = [ module.rg ]
 #     source = "../../Modules/azurerm_key_valut"

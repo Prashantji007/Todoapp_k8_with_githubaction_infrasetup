@@ -1,10 +1,10 @@
-variable "vnet" {
+variable "bastion_host" {
   type = map(object({
     name = string
     location = string
     resource_group_name = string
-    address_space = list(string)
+    virtual_network_name = string
     subnet_name = string
-    address_prefixes = list(string)
+    pip_name = string
   }))
 }

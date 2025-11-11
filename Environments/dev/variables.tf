@@ -55,8 +55,6 @@ variable "mod_networking" {
     address_space = list(string)
     subnet_name = string
     address_prefixes = list(string)
-    nsg = string 
-    asg = string
   }))
 }
 
@@ -79,4 +77,31 @@ variable "mod_nic" {
     subnet_name = string
     virtual_network_name = string
    }))
+}
+
+variable "mod_nsg" {
+  type = map(object({
+      nsg = string
+       location = string
+    resource_group_name = string  
+   }))
+}
+
+variable "mod_asg" {
+  type = map(object({
+      asg = string
+       location = string
+    resource_group_name = string  
+   }))
+}
+
+variable "mod_bastion_host" {
+   type = map(object({
+    name = string
+    location = string
+    resource_group_name = string
+    virtual_network_name = string
+    subnet_name = string
+     pip_name = string
+  }))
 }
