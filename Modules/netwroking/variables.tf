@@ -1,0 +1,12 @@
+variable "vnet" {
+  type = map(object({
+    name = string
+    location = string
+    resource_group_name = string
+    address_space = list(string)
+    subnet_name = string
+    address_prefixes = list(string)
+    nsg = string 
+    asg = string
+  }))
+}

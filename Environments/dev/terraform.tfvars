@@ -64,3 +64,37 @@ mod_kv = {
     }
   }
 }
+
+mod_networking = {
+  "networking" = {
+    name = "vnet1"
+    location = "centralindia"
+    resource_group_name = "rg-todoapp-dev"
+    address_space = ["10.0.0.0/16"] 
+    subnet_name = "snet1"
+    address_prefixes = ["10.0.0.0/24"]
+    nsg = "Rule1"
+    asg = "asg1"
+  }
+}
+
+mod_vm = {
+  "vm1" = {
+    name = "vm1"
+    location = "centralindia"
+    resource_group_name = "rg-todoapp-dev"
+    size = "Standard_b1s"
+    admin_username = "babu"
+  }
+}
+
+mod_nic = {
+  "vm1" = {
+    name = "nic1"
+    location = "centralindia"
+    resource_group_name = "rg-todoapp-dev"
+    ip_name = "Dynamic_private_IP"
+    virtual_network_name = "vnet1"
+    subnet_name = "snet1"
+  }
+}

@@ -35,6 +35,27 @@ module "mssql_db" {
   }
 }
 
+module "netwokring" {
+  depends_on = [ module.rg ]
+  source = "../../Modules/netwroking"
+  vnet = var.mod_networking
+}
+
+module "nic" {
+  depends_on = [ module.netwokring ]
+  source = "../../Modules/NIC"
+  nic = var.mod_nic
+}
+
+module "vm" {
+  depends_on = [ module.rg, module.netwokring, module.nic ]
+  source = "../../Modules/VM_Bastion"
+  vms ={
+    for k,v in var.mod_vm:
+    k => merge(v,{
+      network_interface_ids = [module.nic.network_interface_ids[k]]
+    }) }
+}
 
 # module "kv" {
 #     depends_on = [ module.rg ]
