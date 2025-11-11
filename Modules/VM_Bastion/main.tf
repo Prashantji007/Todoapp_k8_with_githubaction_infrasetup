@@ -7,7 +7,7 @@ resource "azurerm_linux_virtual_machine" "vm1" {
   resource_group_name = each.value.resource_group_name
   network_interface_ids = each.value.network_interface_ids
   size = each.value.size
-
+  admin_username = each.value.admin_username
 admin_ssh_key {
     username   = each.value.admin_username
     public_key = file("~/.ssh/id_rsa.pub")
