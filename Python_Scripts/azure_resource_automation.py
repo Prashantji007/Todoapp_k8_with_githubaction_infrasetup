@@ -18,7 +18,7 @@ from azure.identity import AzureCliCredential
 from azure.mgmt.resource import ResourceManagementClient
 
 # ✅ Full path to Azure CLI (adjust if your install path differs)
-az_path = r"C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd"
+az_path = "C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd"
 SUBSCRIPTION_ID = "e8adc8a2-d308-4d54-a68d-45a79457a55f"
 
 print("🔹 Checking Azure login status...")

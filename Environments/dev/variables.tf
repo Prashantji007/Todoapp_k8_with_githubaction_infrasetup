@@ -48,60 +48,78 @@ variable "mod_kv" {
 }
 
 variable "mod_networking" {
-   type = map(object({
-    name = string
-    location = string
+  type = map(object({
+    name                = string
+    location            = string
     resource_group_name = string
-    address_space = list(string)
-    subnet_name = string
-    address_prefixes = list(string)
+    address_space       = list(string)
+    subnet_name         = string
+    address_prefixes    = list(string)
   }))
 }
 
 variable "mod_vm" {
   type = map(object({
-    name = string
-    location = string
+    name                = string
+    location            = string
     resource_group_name = string
-    size = string
-    admin_username = string
+    size                = string
+    admin_username      = string
   }))
 }
 
 variable "mod_nic" {
   type = map(object({
-    name = string
-    location = string
-    resource_group_name = string
-    ip_name = string
-    subnet_name = string
+    name                 = string
+    location             = string
+    resource_group_name  = string
+    ip_name              = string
+    subnet_name          = string
     virtual_network_name = string
-   }))
+  }))
 }
 
 variable "mod_nsg" {
   type = map(object({
-      nsg = string
-       location = string
-    resource_group_name = string  
-   }))
+    nsg                 = string
+    location            = string
+    resource_group_name = string
+    subnet_name = string
+    virtual_network_name = string
+  }))
 }
 
 variable "mod_asg" {
   type = map(object({
-      asg = string
-       location = string
-    resource_group_name = string  
-   }))
+    asg                 = string
+    location            = string
+    resource_group_name = string
+  }))
 }
 
 variable "mod_bastion_host" {
-   type = map(object({
+  type = map(object({
+    name                 = string
+    location             = string
+    resource_group_name  = string
+    virtual_network_name = string
+    subnet_name          = string
+    pip_name             = string
+  }))
+}
+
+variable "mod_stg" {
+  type = map(object({
+    name                = string
+    location            = string
+    resource_group_name = string
+  }))
+}
+
+variable "mod_logs" {
+  type = map(object({
     name = string
     location = string
     resource_group_name = string
-    virtual_network_name = string
-    subnet_name = string
-     pip_name = string
   }))
 }

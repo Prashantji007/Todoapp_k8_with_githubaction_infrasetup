@@ -20,3 +20,17 @@ resource "azurerm_network_security_group" "nsg" {
     environment = "dev"
   }
 }
+
+
+data "azurerm_subnet" "datasubnet" {
+  for_each = var.nsg
+  name = each.value.subnet_name
+  virtual_network_name = each.value.virtual_network_name
+  resource_group_name = each.value.resource_group_name
+}
+
+resource "azurerm_subnet_network_security_group_association" "subnet_nsg" {
+  for_each = var.nsg
+  subnet_id                 = data.azurerm_subnet.datasubnet[each.key].id
+  network_security_group_id = azurerm_network_security_group.nsg[each.key].id
+}

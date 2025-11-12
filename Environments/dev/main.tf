@@ -19,15 +19,15 @@ module "acr" {
 }
 
 module "mssql_server" {
-    depends_on = [ module.rg ]
-    source = "../../Modules/azurerm_mssql_server"
-    mssql_server  = var.mod_mssql_server
+  depends_on   = [module.rg]
+  source       = "../../Modules/azurerm_mssql_server"
+  mssql_server = var.mod_mssql_server
 }
 
 module "mssql_db" {
   depends_on = [module.mssql_server, module.rg]
   source     = "../../Modules/azurerm_mssql_DB"
-    mssql_db = {
+  mssql_db = {
     for k, v in var.mod_mssql_db :
     k => merge(v, {
       server_id = module.mssql_server.mssql_server_ids["mssql1"]
@@ -36,49 +36,61 @@ module "mssql_db" {
 }
 
 module "netwokring" {
-  depends_on = [ module.rg ]
-  source = "../../Modules/netwroking"
-  vnet = var.mod_networking
+  depends_on = [module.rg]
+  source     = "../../Modules/azurerm_netwroking"
+  vnet       = var.mod_networking
 }
 
 module "nsg" {
-  depends_on = [ module.rg,module.netwokring ]
-  source = "../../Modules/NSG"
-  nsg = var.mod_nsg
-  
+  depends_on = [module.rg, module.netwokring]
+  source     = "../../Modules/azurerm_NSG"
+  nsg        = var.mod_nsg
+
 }
 
 module "asg" {
-  depends_on = [ module.rg,module.netwokring ]
-  source = "../../Modules/ASG"
-  asg = var.mod_asg
-  
+  depends_on = [module.rg, module.netwokring]
+  source     = "../../Modules/azurerm_ASG"
+  asg        = var.mod_asg
+
 }
 module "nic" {
-  depends_on = [ module.netwokring ]
-  source = "../../Modules/NIC"
-  nic = var.mod_nic
+  depends_on = [module.netwokring]
+  source     = "../../Modules/azurerm_NIC"
+  nic        = var.mod_nic
 }
 
 module "vm" {
-  depends_on = [ module.rg, module.netwokring, module.nic ]
-  source = "../../Modules/VM"
-  vms ={
-    for k,v in var.mod_vm:
-    k => merge(v,{
+  depends_on = [module.rg, module.netwokring, module.nic]
+  source     = "../../Modules/azurerm_VM"
+  vms = {
+    for k, v in var.mod_vm :
+    k => merge(v, {
       network_interface_ids = [module.nic.network_interface_ids[k]]
-    }) }
+  }) }
 }
 
 
 module "bastion_host" {
-  depends_on = [ module.rg,module.netwokring,module.vm ]
-  source = "../../Modules/Bastion_Host"
+  depends_on   = [module.rg, module.netwokring, module.vm]
+  source       = "../../Modules/azurerm_Bastion_Host"
   bastion_host = var.mod_bastion_host
 }
-# module "kv" {
-#     depends_on = [ module.rg ]
-#     source = "../../Modules/azurerm_key_valut"
-#     kv  = var.mod_kv   
 
-# }
+module "kv" {
+  depends_on = [module.rg]
+  source     = "../../Modules/azurerm_key_valut"
+  kv         = var.mod_kv
+
+}
+
+module "stg" {
+  depends_on = [module.rg]
+  source     = "../../Modules/azurerm_storage_account"
+  stg        = var.mod_stg
+}
+
+module "logs" {
+  source = "../../Modules/azurerm_log_analytics"
+  logs = var.mod_logs
+}
