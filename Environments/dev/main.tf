@@ -91,7 +91,7 @@ module "stg" {
 }
 
 module "logs" {
-  depends_on = [ module.monitor ]
+  depends_on = [module.rg, module.monitor ]
   source = "../../Modules/azurerm_log_analytics"
   logs = var.mod_logs
 }
@@ -100,4 +100,16 @@ module "monitor" {
   depends_on = [ module.rg ]
   source = "../../Modules/azrerm_azure_monitor"
   monitor = var.mod_monitor
+}
+
+module "mgmt" {
+  depends_on = [ module.rg ]
+  source = "../../Modules/azurerm_mgmt_group"
+  mgmt = var.mod_mgmt
+}
+
+module "policy" {
+  depends_on = [ module.mgmt ]
+  source = "../../Modules/azurerm_policy_mgmt"
+  policy = var.mod_policy
 }
