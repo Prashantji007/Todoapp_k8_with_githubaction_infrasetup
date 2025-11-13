@@ -91,6 +91,13 @@ module "stg" {
 }
 
 module "logs" {
+  depends_on = [ module.monitor ]
   source = "../../Modules/azurerm_log_analytics"
   logs = var.mod_logs
+}
+
+module "monitor" {
+  depends_on = [ module.rg ]
+  source = "../../Modules/azrerm_azure_monitor"
+  monitor = var.mod_monitor
 }

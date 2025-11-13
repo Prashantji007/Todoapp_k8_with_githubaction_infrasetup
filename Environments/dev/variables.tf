@@ -123,3 +123,11 @@ variable "mod_logs" {
     resource_group_name = string
   }))
 }
+
+variable "mod_monitor" {
+   type = map(object({
+    name = string
+    resource_group_name = string
+    location = string 
+  }))
+}

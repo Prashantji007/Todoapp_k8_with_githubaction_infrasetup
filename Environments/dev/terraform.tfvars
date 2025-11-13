@@ -151,3 +151,11 @@ mod_logs = {
     resource_group_name  = "rg-todoapp-dev"
   }
 }
+
+mod_monitor = {
+  "monitoring" = {
+    name = "monitoring_sol"
+    location             = "centralindia"
+    resource_group_name  = "rg-todoapp-dev"
+}
+}
