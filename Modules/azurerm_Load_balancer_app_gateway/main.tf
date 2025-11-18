@@ -10,7 +10,7 @@ resource "azurerm_public_ip" "pip-lb" {
     for_each = var.LB
     name = "LB_PIP"
     location = each.value.location
-    allocation_method = "static"
+    allocation_method = "Static"
     resource_group_name = each.value.resource_group_name
 }
 
