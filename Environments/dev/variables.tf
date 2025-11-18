@@ -65,6 +65,7 @@ variable "mod_vm" {
     resource_group_name = string
     size                = string
     admin_username      = string
+  SSH_Key = string
   }))
 }
 

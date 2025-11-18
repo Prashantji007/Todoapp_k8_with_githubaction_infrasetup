@@ -16,7 +16,8 @@ permissions:
 jobs:
   terraforminit:
     name: terraform initialization
-    runs-on: raja:rana
+    #runs-on: raja:rana
+    runs-on: ubuntu-latest  
 
     steps: 
     - name: Checkout repo
@@ -39,7 +40,7 @@ jobs:
       id: init
       run: terraform init -input=false
       working-directory: Environments/dev
-      shell: cmd
+      shell: bash
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -50,17 +51,19 @@ jobs:
       id: validate
       run: terraform validate -no-color
       working-directory: Environments/dev
-      shell: cmd
+      shell: bash
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         ARM_USE_OIDC: true
+        TF_VAR_SSH_Key: ${{ secrets.VM_PUB_SSH_KEY }}
       
 
   terraforminitandplan:
     name: terraform init and plan
-    runs-on: raja:rana
+    #runs-on: raja:rana
+    runs-on: ubuntu-latest
     needs: terraforminit
 
     steps:
@@ -74,6 +77,21 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+    - name: Setup TFLint
+      uses: terraform-linters/setup-tflint@v6.2.1
+      with:
+        tflint_version: latest
+
+    - name: Simple Tflint Action
+      uses: notrenderfarm/tflint-action@v1.2
+      with:
+        directory: Environments/dev
+
+    - name: Checkov GitHub Action
+      uses: bridgecrewio/checkov-action@v12.1347.0
+      with:
+        directory: Environments/dev              
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
       with:
@@ -83,7 +101,7 @@ jobs:
       id: init
       run: terraform init -input=false
       working-directory: Environments/dev
-      shell: cmd
+      shell: bash
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -94,18 +112,20 @@ jobs:
       id: plan
       run: terraform plan -no-color -input=false 
       working-directory: Environments/dev
-      shell: cmd
+      shell: bash
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         MSSQL_PASSWORD: ${{secrets.MSSQL_PASSWORD}}
         ARM_USE_OIDC: true
+        TF_VAR_SSH_Key: ${{ secrets.VM_PUB_SSH_KEY }}
 
 
   terraforminitandapply:
       name: terraform init and apply
-      runs-on: raja:rana
+      #runs-on: raja:rana
+      runs-on: ubuntu-latest
       environment: dev
       if: github.ref == 'refs/heads/main'
       needs: terraforminitandplan
@@ -130,7 +150,7 @@ jobs:
         id: init
         run: terraform init -input=false
         working-directory: Environments/dev
-        shell: cmd
+        shell: bash
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -141,10 +161,11 @@ jobs:
         id: apply
         run: terraform apply --auto-approve 
         working-directory: Environments/dev
-        shell: cmd
+        shell: bash
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           MSSQL_PASSWORD: ${{secrets.MSSQL_PASSWORD}}
           ARM_USE_OIDC: true
+          TF_VAR_SSH_Key: ${{ secrets.VM_PUB_SSH_KEY }}

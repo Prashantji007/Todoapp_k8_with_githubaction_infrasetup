@@ -6,6 +6,7 @@ variable "vms" {
     network_interface_ids = list(string)
     size = string
     admin_username = string
+   SSH_Key = string
   }))
 }
 
