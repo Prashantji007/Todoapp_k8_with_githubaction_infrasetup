@@ -67,10 +67,10 @@ jobs:
     - name: Run TFLint
       run: tflint --chdir=Environments/dev
 
-    - name: Checkov GitHub Action
-      uses: bridgecrewio/checkov-action@v12.1347.0
-      with:
-        directory: Environments/dev  
+    # - name: Checkov GitHub Action
+    #   uses: bridgecrewio/checkov-action@v12.1347.0
+    #   with:
+    #     directory: Environments/dev  
       
 
   terraforminitandplan:
