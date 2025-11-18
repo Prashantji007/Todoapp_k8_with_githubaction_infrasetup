@@ -56,6 +56,7 @@ jobs:
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         ARM_USE_OIDC: true
+        TF_VAR_SSH_Key: ${{ secrets.VM_PUB_SSH_KEY }}
       
 
   terraforminitandplan:
@@ -116,6 +117,7 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         MSSQL_PASSWORD: ${{secrets.MSSQL_PASSWORD}}
         ARM_USE_OIDC: true
+        TF_VAR_SSH_Key: ${{ secrets.VM_PUB_SSH_KEY }}
 
 
   terraforminitandapply:
@@ -163,3 +165,4 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           MSSQL_PASSWORD: ${{secrets.MSSQL_PASSWORD}}
           ARM_USE_OIDC: true
+          TF_VAR_SSH_Key: ${{ secrets.VM_PUB_SSH_KEY }}
