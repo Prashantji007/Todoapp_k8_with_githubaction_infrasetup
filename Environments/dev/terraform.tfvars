@@ -233,5 +233,6 @@ mod_LB = {
     location             = "centralindia"
     resource_group_name  = "rg-todoapp-dev"
     virtual_network_name = "vnet1"
+     subnet_name         = "snet1"
   }
 }

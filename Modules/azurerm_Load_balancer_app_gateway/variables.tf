@@ -4,5 +4,6 @@ variable "LB" {
     resource_group_name = string
     location = string
     virtual_network_name = string  
+    subnet_name = string
   }))
 }
