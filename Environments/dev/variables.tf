@@ -152,3 +152,12 @@ variable "mod_policy" {
     mgmt_name = string
   }))
 }
+
+variable "mod_LB" {
+  type = map(object({
+    name = string
+    resource_group_name = string
+    location = string
+    virtual_network_name = string  
+  }))
+}

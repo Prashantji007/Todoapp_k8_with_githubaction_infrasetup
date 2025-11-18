@@ -113,3 +113,8 @@ module "policy" {
   source = "../../Modules/azurerm_policy_mgmt"
   policy = var.mod_policy
 }
+
+module "LB" {
+  source = "../../Modules/azurerm_Load_balancer_app_gateway"
+  LB = var.mod_LB
+}

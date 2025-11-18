@@ -225,4 +225,11 @@ POLICY
   }
 }
 
-
+mod_LB = {
+  "LB1" = {
+    name = "LB-App-Gatway"
+    location             = "centralindia"
+    resource_group_name  = "rg-todoapp-dev"
+    virtual_network_name = "vnet1"
+  }
+}
