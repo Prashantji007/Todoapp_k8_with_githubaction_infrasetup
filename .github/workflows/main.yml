@@ -16,7 +16,8 @@ permissions:
 jobs:
   terraforminit:
     name: terraform initialization
-    runs-on: raja:rana
+    #runs-on: raja:rana
+    runs-on: ubuntu-latest  
 
     steps: 
     - name: Checkout repo
