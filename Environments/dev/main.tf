@@ -115,6 +115,7 @@ module "policy" {
 }
 
 module "LB" {
+  depends_on = [ module.netwokring ]
   source = "../../Modules/azurerm_Load_balancer_app_gateway"
   LB = var.mod_LB
 }
