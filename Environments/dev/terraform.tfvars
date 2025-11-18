@@ -104,6 +104,8 @@ mod_nic = {
     ip_name              = "Dynamic_private_IP"
     virtual_network_name = "vnet1"
     subnet_name          = "snet1"
+    SSH_Key = "6464sgmmmdummy"
+    
   }
 }
 
