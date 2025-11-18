@@ -14,7 +14,7 @@ terraform {
   #   container_name       = "tfstate"
   #   key                  = "infra/terraform.tfstate"
   # }
-
+ required_version = ">=1.0"
 }
 
 
