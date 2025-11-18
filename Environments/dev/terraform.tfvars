@@ -93,6 +93,7 @@ mod_vm = {
     resource_group_name = "rg-todoapp-dev"
     size                = "Standard_b1s"
     admin_username      = "babu"
+    SSH_Key = "6464sgmmmdummy"
   }
 }
 
@@ -103,9 +104,7 @@ mod_nic = {
     resource_group_name  = "rg-todoapp-dev"
     ip_name              = "Dynamic_private_IP"
     virtual_network_name = "vnet1"
-    subnet_name          = "snet1"
-    SSH_Key = "6464sgmmmdummy"
-    
+    subnet_name          = "snet1"    
   }
 }
 
