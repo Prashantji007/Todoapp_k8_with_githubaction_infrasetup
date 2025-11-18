@@ -67,8 +67,7 @@ jobs:
     - name: Simple Tflint Action
       uses: notrenderfarm/tflint-action@v1.2
       with:
-        args: >
-          --chdir Environments/dev
+        args: "--chdir Environments/dev"  
 
     - name: Checkov GitHub Action
       uses: bridgecrewio/checkov-action@v12.1347.0
