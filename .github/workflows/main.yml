@@ -39,7 +39,7 @@ jobs:
       id: init
       run: terraform init -input=false
       working-directory: Environments/dev
-      shell: cmd
+      shell: bash
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -50,7 +50,7 @@ jobs:
       id: validate
       run: terraform validate -no-color
       working-directory: Environments/dev
-      shell: cmd
+      shell: bash
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -98,7 +98,7 @@ jobs:
       id: init
       run: terraform init -input=false
       working-directory: Environments/dev
-      shell: cmd
+      shell: bash
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -109,7 +109,7 @@ jobs:
       id: plan
       run: terraform plan -no-color -input=false 
       working-directory: Environments/dev
-      shell: cmd
+      shell: bash
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -145,7 +145,7 @@ jobs:
         id: init
         run: terraform init -input=false
         working-directory: Environments/dev
-        shell: cmd
+        shell: bash
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -156,7 +156,7 @@ jobs:
         id: apply
         run: terraform apply --auto-approve 
         working-directory: Environments/dev
-        shell: cmd
+        shell: bash
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
