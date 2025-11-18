@@ -94,7 +94,7 @@ mod_vm = {
     size                = "Standard_b1s"
     admin_username      = "babu"
     SSH_Key = "6464sgmmmdummy"
-    network_interface_ids = ""
+    network_interface_ids = [""]
   }
 }
 
