@@ -28,7 +28,7 @@ resource "azurerm_application_gateway" "network" {
 
   gateway_ip_configuration {
     name      = "my-gateway-ip-configuration"
-    subnet_id = data.azurerm_subnet.datasubnet.id
+    subnet_id = data.azurerm_subnet.datasubnet[each.key].id
   }
 
   frontend_port {
@@ -39,7 +39,7 @@ resource "azurerm_application_gateway" "network" {
 
   frontend_ip_configuration {
     name                 = "${each.value.virtual_network_name}-feip"
-    public_ip_address_id = azurerm_public_ip.pip-lb.id
+    public_ip_address_id = azurerm_public_ip.pip-lb[each.key].id
   }
 
   backend_address_pool {
