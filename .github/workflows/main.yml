@@ -73,6 +73,21 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+    - name: Setup TFLint
+      uses: terraform-linters/setup-tflint@v6.2.1
+      with:
+        tflint_version: latest
+
+    - name: Simple Tflint Action
+      uses: notrenderfarm/tflint-action@v1.2
+      with:
+        directory: Environments/dev
+
+    - name: Checkov GitHub Action
+      uses: bridgecrewio/checkov-action@v12.1347.0
+      with:
+        directory: Environments/dev              
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
       with:
