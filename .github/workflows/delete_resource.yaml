@@ -11,7 +11,7 @@ permissions:
 jobs:
   terraforminitanddestroy:
       name: terraform init and destroy
-      runs-on: raja:rana
+      runs-on: ubuntu-latest
       environment: Destory_resource
       if: github.ref == 'refs/heads/main'
      
@@ -35,7 +35,7 @@ jobs:
         id: init
         run: terraform init -input=false
         working-directory: Environments/dev
-        shell: cmd
+        shell: bash
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -46,7 +46,7 @@ jobs:
         id: destroy
         run: terraform destroy --auto-approve 
         working-directory: Environments/dev
-        shell: cmd
+        shell: bash
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
