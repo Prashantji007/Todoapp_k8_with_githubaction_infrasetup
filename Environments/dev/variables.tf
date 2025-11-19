@@ -66,7 +66,7 @@ variable "mod_vm" {
     size                = string
     network_interface_ids = list(string)
     admin_username      = string
-    SSH_Key = string
+    SSH_Key             = string
   }))
 }
 
