@@ -5,6 +5,12 @@ data "azurerm_subnet" "datasubnet" {
   resource_group_name = each.value.resource_group_name
 }
 
+data "azurerm_web_application_firewall_policy" "datafire" {
+  for_each = var.LB
+  name = "firepoll"
+  resource_group_name = each.value.resource_group_name
+}
+
 
 resource "azurerm_public_ip" "pip-lb" {
     for_each = var.LB
@@ -16,9 +22,10 @@ resource "azurerm_public_ip" "pip-lb" {
 
 resource "azurerm_application_gateway" "network" {
     for_each = var.LB
-  name                = "example-appgateway"
+  name                = each.value.name
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
+  firewall_policy_id = data.azurerm_web_application_firewall_policy.datafire[each.key].id
 
   sku {
     name     = "Standard_v2"

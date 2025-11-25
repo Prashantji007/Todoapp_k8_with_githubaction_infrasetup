@@ -164,3 +164,12 @@ variable "mod_LB" {
     subnet_name = string
   }))
 }
+
+
+variable "mod_firepoll" {
+  type = map(object({
+    name = string
+    location = string
+    resource_group_name =  string
+  }))
+}

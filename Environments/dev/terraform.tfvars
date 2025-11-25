@@ -236,3 +236,11 @@ mod_LB = {
      subnet_name         = "snet1"
   }
 }
+
+mod_firepoll = {
+  "policy1" = {
+    name = "firepolicy1"
+    location             = "centralindia"
+    resource_group_name  = "rg-todoapp-dev"
+  }
+}
