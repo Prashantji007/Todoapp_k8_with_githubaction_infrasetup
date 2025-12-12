@@ -1,5 +1,5 @@
 output "rg_name" {
-  value = { for k, rg in azurerm_resource_group.rg_todoapp : k => rg.name }
+  value = [for  v in azurerm_resource_group.rg_todoapp : v.name ]
 }
 
 output "location" {
