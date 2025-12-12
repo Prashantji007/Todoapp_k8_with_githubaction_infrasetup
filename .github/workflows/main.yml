@@ -72,6 +72,14 @@ jobs:
     #   with:
     #     directory: Environments/dev  
 
+    - name: Run bash commands
+      run: |
+        echo "Initialise the go module..."
+        go mod init "todoinfracheck"
+        go get github.com/gruntwork-io/terratest@v0.46.16
+        go get github.com/stretchr/testify@v1.8.4
+        go mod tidy
+      shell: bash
 
     - name: Terratest Test Runner
       # You may pin to the exact commit or the version.
