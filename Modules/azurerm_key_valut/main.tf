@@ -10,24 +10,45 @@ resource "azurerm_key_vault" "key_vault_todoapp" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
-
+  enable_rbac_authorization = true
+  public_network_access_enabled = false
   sku_name = "standard"
 
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
+  # access_policy {
+  #   tenant_id = data.azurerm_client_config.current.tenant_id
+  #   object_id = data.azurerm_client_config.current.object_id
 
-    key_permissions = [
-      "Get",
-    ]
+  #   key_permissions = [
+  #     "Get",
+  #   ]
 
-    secret_permissions = [
-      "Get",
-    ]
+  #   secret_permissions = [
+  #     "Get",
+  #   ]
 
-    storage_permissions = [
-      "Get",
-    ]
-  }
+  #   storage_permissions = [
+  #     "Get",
+  #   ]
+  # }
   tags = each.value.tags
+}
+
+
+data "azurerm_user_assigned_identity" "uai" {
+  for_each = var.kv
+  name = each.value.uai_name
+  resource_group_name = each.value.uai_rg_name
+}
+
+resource "azurerm_role_assignment" "aks_kv_reader" {
+  scope                = azurerm_key_vault.key_vault_todoapp.id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = data.azurerm_user_assigned_identity.aks_identity.principal_id
+}
+
+# Example secret: DB Connection String
+resource "azurerm_key_vault_secret" "db_conn" {
+  name         = "db-connection"
+  value        = var.db_connection_string
+  key_vault_id = azurerm_key_vault.kv.id
 }

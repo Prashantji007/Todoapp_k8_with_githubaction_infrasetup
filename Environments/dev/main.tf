@@ -125,3 +125,9 @@ module "acr" {
 #   source = "../../Modules/azurerm_Firewall_Policy_Rules"
 #   firepoll = var.mod_firepoll
 # }
+
+module "mod_manged_identity" {
+  depends_on = [ module.rg ]
+  source = "../../Modules/azurerm_managed_identity"
+  managed_identity = var.mod_managed_identity
+}

@@ -5,5 +5,11 @@ variable "kv" {
         location             = string
         resource_group_name  = string
         tags                 = map(string)
+        uai_name             = string 
     }))
+}
+
+variable "db_connection_string" {
+  type = any
+  sensitive = true
 }

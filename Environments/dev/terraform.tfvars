@@ -18,6 +18,7 @@ mod_aks = {
       Environment = "Development"
       Owner       = "Prashant"
     }
+    uai_name = "aks-uai-dev"
   }
 }
 
@@ -62,6 +63,7 @@ mod_kv = {
       Environment = "Development"
       Owner       = "Prashant"
     }
+    uai_name = "aks-uai-dev"
   }
 }
 
@@ -242,5 +244,13 @@ mod_firepoll = {
     name = "firepolicy1"
     location             = "centralindia"
     resource_group_name  = "rg-todoapp-dev"
+  }
+}
+
+mod_managed_identity = {
+  "aks_identity" = {
+    name                = "aks-uai-dev"
+    location            = "centralindia"
+    resource_group_name = "rg-todoapp-dev"
   }
 }

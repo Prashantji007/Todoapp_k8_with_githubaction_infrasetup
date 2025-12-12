@@ -11,6 +11,7 @@ variable "mod_aks" {
     location            = string
     resource_group_name = string
     tags                = map(string)
+    uai_name            = string
   }))
 }
 variable "mod_acr" {
@@ -44,6 +45,7 @@ variable "mod_kv" {
     location            = string
     resource_group_name = string
     tags                = map(string)
+    uai_name            = string
   }))
 }
 
@@ -171,5 +173,13 @@ variable "mod_firepoll" {
     name = string
     location = string
     resource_group_name =  string
+  }))
+}
+
+variable "mod_managed_identity" {
+  type = map(object({
+   name = string
+    location = string   
+    resource_group_name = string
   }))
 }

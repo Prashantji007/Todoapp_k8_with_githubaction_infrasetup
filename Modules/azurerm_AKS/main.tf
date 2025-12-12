@@ -1,3 +1,9 @@
+data "azurerm_user_assigned_identity" "uai" {
+  for_each = var.aks
+  name = each.value.uai_name
+  resource_group_name = each.value.resource_group_name
+}
+
 resource "azurerm_kubernetes_cluster" "aks_todoapp" {
     for_each = var.aks
   name                = each.value.aks_name
@@ -22,9 +28,17 @@ network_profile {
 
   
 
-  identity {
-    type = "SystemAssigned"
-  }
+  # identity {
+  #   type = "SystemAssigned"
+  # }
+
+ identity {
+  type = "UserAssigned"
+  identity_ids = [
+    data.azurerm_user_assigned_identity.uai[each.key].id
+  ]
+}
+
 
   tags = each.value.tags
 }
