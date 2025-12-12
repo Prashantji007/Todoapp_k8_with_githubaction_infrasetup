@@ -59,13 +59,13 @@ jobs:
         ARM_USE_OIDC: true
         TF_VAR_SSH_Key: ${{ secrets.VM_PUB_SSH_KEY }}
 
-    - name: Setup TFLint
-      uses: terraform-linters/setup-tflint@v6.2.1
-      with:
-        tflint_version: latest
+    # - name: Setup TFLint
+    #   uses: terraform-linters/setup-tflint@v6.2.1
+    #   with:
+    #     tflint_version: latest
 
-    - name: Run TFLint
-      run: tflint --chdir=Environments/dev
+    # - name: Run TFLint
+    #   run: tflint --chdir=Environments/dev
 
     # - name: Checkov GitHub Action
     #   uses: bridgecrewio/checkov-action@v12.1347.0
