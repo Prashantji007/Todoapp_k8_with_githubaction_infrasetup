@@ -18,28 +18,28 @@ module "acr" {
   acr        = var.mod_acr
 }
 
-# module "mssql_server" {
-#   depends_on   = [module.rg]
-#   source       = "../../Modules/azurerm_mssql_server"
-#   mssql_server = var.mod_mssql_server
-# }
-
-# module "mssql_db" {
-#   depends_on = [module.mssql_server, module.rg]
-#   source     = "../../Modules/azurerm_mssql_DB"
-#   mssql_db = {
-#     for k, v in var.mod_mssql_db :
-#     k => merge(v, {
-#       server_id = module.mssql_server.mssql_server_ids["mssql1"]
-#     })
-#   }
-# }
-
-module "netwokring" {
-  depends_on = [module.rg]
-  source     = "../../Modules/azurerm_netwroking"
-  vnet       = var.mod_networking
+module "mssql_server" {
+  depends_on   = [module.rg]
+  source       = "../../Modules/azurerm_mssql_server"
+  mssql_server = var.mod_mssql_server
 }
+
+module "mssql_db" {
+  depends_on = [module.mssql_server, module.rg]
+  source     = "../../Modules/azurerm_mssql_DB"
+  mssql_db = {
+    for k, v in var.mod_mssql_db :
+    k => merge(v, {
+      server_id = module.mssql_server.mssql_server_ids["mssql1"]
+    })
+  }
+}
+
+# module "netwokring" {
+#   depends_on = [module.rg]
+#   source     = "../../Modules/azurerm_netwroking"
+#   vnet       = var.mod_networking
+# }
 
 # module "nsg" {
 #   depends_on = [module.rg, module.netwokring]
@@ -114,14 +114,14 @@ module "netwokring" {
 #   policy = var.mod_policy
 # }
 
-module "LB" {
-  depends_on = [ module.netwokring ]
-  source = "../../Modules/azurerm_Load_balancer_app_gateway"
-  LB = var.mod_LB
-}
+# module "LB" {
+#   depends_on = [ module.netwokring ]
+#   source = "../../Modules/azurerm_Load_balancer_app_gateway"
+#   LB = var.mod_LB
+# }
 
-module "firewall" {
-  depends_on = [ module.rg ]
-  source = "../../Modules/azurerm_Firewall_Policy_Rules"
-  firepoll = var.mod_firepoll
-}
+# module "firewall" {
+#   depends_on = [ module.rg ]
+#   source = "../../Modules/azurerm_Firewall_Policy_Rules"
+#   firepoll = var.mod_firepoll
+# }
