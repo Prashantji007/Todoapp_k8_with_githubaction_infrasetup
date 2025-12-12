@@ -78,6 +78,7 @@ jobs:
         go mod init "todoinfracheck"
         go get github.com/gruntwork-io/terratest@v0.46.16
         go get github.com/stretchr/testify@v1.8.4
+        go get .Infra_test.go
         go mod tidy
         go test .\Infra_test.go
       shell: bash
