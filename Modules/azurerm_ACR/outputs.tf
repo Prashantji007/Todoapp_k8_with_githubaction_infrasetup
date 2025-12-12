@@ -1,3 +1,3 @@
 output "acr_name" {
-  value = [ for v in azurerm_kubernetes_cluster.aks_todoapp : v.name ]
+  value = [ for v in azurerm_container_registry.acr_todoapp : v.name ]
 }
