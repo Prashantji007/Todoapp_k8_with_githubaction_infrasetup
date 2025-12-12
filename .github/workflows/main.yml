@@ -72,9 +72,10 @@ jobs:
     #   with:
     #     directory: Environments/dev  
 
-    - name: Run bash commands
+    - name: Terratest infra test
       run: |
         echo "Initialise the go module..."
+        cd ../Test
         go mod init "todoinfracheck"
         go get github.com/gruntwork-io/terratest@v0.46.16
         go get github.com/stretchr/testify@v1.8.4
