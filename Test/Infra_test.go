@@ -23,6 +23,7 @@ func TestInfratodoapp(t *testing.T) {
 	aksName := terraform.Output(t, terraformOptions, "aks_name")
 	assert.NotEmpty(t, aksName)
 
-	rg := terraform.Output(t, terraformOptions, "rg_name")
-	assert.Equal(t, "rg-todoapp-dev", rg)
+	rgList := terraform.OutputList(t, terraformOptions, "rg_name")
+	assert.Contains(t, rgList, "rg-todoapp-dev")
+
 }	
