@@ -16,7 +16,13 @@ func TestInfratodoapp(t *testing.T) {
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
+	
+	acrName := terraform.Output(t, terraformOptions, "acr_name")
+	assert.Contains(t, acrName, "acr")
 
-	output := terraform.Output(t, terraformOptions, "hello_world")
-	assert.Equal(t, "Hello, World!", output)
-}
+	aksName := terraform.Output(t, terraformOptions, "aks_name")
+	assert.NotEmpty(t, aksName)
+
+	rg := terraform.Output(t, terraformOptions, "rg_name")
+	assert.Equal(t, "rg-todoapp-dev", rg)
+}	
