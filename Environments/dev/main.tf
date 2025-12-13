@@ -12,11 +12,11 @@ module "aks" {
   aks        = var.mod_aks
 }
 
-# module "acr" {
-#   depends_on = [module.rg]
-#   source     = "../../Modules/azurerm_ACR"
-#   acr        = var.mod_acr
-# }
+module "acr" {
+  depends_on = [module.rg]
+  source     = "../../Modules/azurerm_ACR"
+  acr        = var.mod_acr
+}
 
 # module "mssql_server" {
 #   depends_on   = [module.rg]
