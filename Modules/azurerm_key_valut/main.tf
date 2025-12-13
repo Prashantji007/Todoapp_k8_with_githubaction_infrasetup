@@ -48,8 +48,24 @@ resource "azurerm_role_assignment" "aks_kv_reader" {
   principal_id         = data.azurerm_user_assigned_identity.uai[each.key].principal_id
 }
 
+
+resource "azurerm_role_assignment" "tf_kv_admin" {
+  for_each = var.kv
+  scope                = azurerm_key_vault.key_vault_todoapp[each.key].id
+  role_definition_name = "Key Vault Administrator"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
+
+resource "time_sleep" "wait_for_kv_rbac" {
+  depends_on      = [azurerm_role_assignment.tf_kv_admin]
+  create_duration = "120s"
+}
+
+
+
 # Example secret: DB Connection String
 resource "azurerm_key_vault_secret" "db_conn" {
+  depends_on = [ time_sleep.wait_for_kv_rbac ]
   for_each = var.kv
   name         = "db-connection"
   value        = var.db_connection_string
