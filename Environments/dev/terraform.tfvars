@@ -255,4 +255,4 @@ mod_managed_identity = {
   }
 }
 
-db_connection_string = "Driver={ODBC Driver 18 for SQL Server};Server=tcp:sql-todoapp-dev.database.windows.net,1433;Database=todoappdb;Uid=sqladmin;Pwd=Password@123;Encrypt=yes;TrustServerCertificate=no;"
+db_connection_string = "Demo_Cponnection_String"
