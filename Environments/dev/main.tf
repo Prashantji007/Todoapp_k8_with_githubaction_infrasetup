@@ -7,7 +7,7 @@ module "rg" {
 }
 
 module "aks" {
-  depends_on = [module.rg]
+  depends_on = [module.rg, module.mod_manged_identity]
   source     = "../../Modules/azurerm_AKS"
   aks        = var.mod_aks
 }
