@@ -36,19 +36,22 @@ resource "azurerm_key_vault" "key_vault_todoapp" {
 
 data "azurerm_user_assigned_identity" "uai" {
   for_each = var.kv
-  name = each.value.uai_name
-  resource_group_name = each.value.uai_rg_name
+  name                =each.value.uai_name
+  resource_group_name = each.value.resource_group_name
 }
 
+
 resource "azurerm_role_assignment" "aks_kv_reader" {
-  scope                = azurerm_key_vault.key_vault_todoapp.id
+  for_each = var.kv
+  scope                = azurerm_key_vault.key_vault_todoapp[each.key].id
   role_definition_name = "Key Vault Secrets User"
-  principal_id         = data.azurerm_user_assigned_identity.aks_identity.principal_id
+  principal_id         = data.azurerm_user_assigned_identity.uai[each.key].principal_id
 }
 
 # Example secret: DB Connection String
 resource "azurerm_key_vault_secret" "db_conn" {
+  for_each = var.kv
   name         = "db-connection"
   value        = var.db_connection_string
-  key_vault_id = azurerm_key_vault.kv.id
+  key_vault_id = azurerm_key_vault.key_vault_todoapp[each.key].id
 }

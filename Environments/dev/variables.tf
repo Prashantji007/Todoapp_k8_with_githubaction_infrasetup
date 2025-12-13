@@ -60,6 +60,7 @@ variable "mod_networking" {
   }))
 }
 
+
 variable "mod_vm" {
   type = map(object({
     name                = string
@@ -183,3 +184,10 @@ variable "mod_managed_identity" {
     resource_group_name = string
   }))
 }
+
+
+variable "db_connection_string" {
+  type = any
+  sensitive = true
+}
+

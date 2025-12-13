@@ -10,6 +10,6 @@ variable "kv" {
 }
 
 variable "db_connection_string" {
-  type = any
+  type = string
   sensitive = true
 }

@@ -254,3 +254,5 @@ mod_managed_identity = {
     resource_group_name = "rg-todoapp-dev"
   }
 }
+
+db_connection_string = "Driver={ODBC Driver 18 for SQL Server};Server=tcp:sql-todoapp-dev.database.windows.net,1433;Database=todoappdb;Uid=sqladmin;Pwd=Password@123;Encrypt=yes;TrustServerCertificate=no;"

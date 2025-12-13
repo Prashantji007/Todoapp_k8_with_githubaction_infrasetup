@@ -12,11 +12,11 @@ module "aks" {
   aks        = var.mod_aks
 }
 
-module "acr" {
-  depends_on = [module.rg]
-  source     = "../../Modules/azurerm_ACR"
-  acr        = var.mod_acr
-}
+# module "acr" {
+#   depends_on = [module.rg]
+#   source     = "../../Modules/azurerm_ACR"
+#   acr        = var.mod_acr
+# }
 
 # module "mssql_server" {
 #   depends_on   = [module.rg]
@@ -77,12 +77,14 @@ module "acr" {
 #   bastion_host = var.mod_bastion_host
 # }
 
-# module "kv" {
-#   depends_on = [module.rg]
-#   source     = "../../Modules/azurerm_key_valut"
-#   kv         = var.mod_kv
 
-# }
+
+module "kv" {
+  depends_on = [module.rg, module.aks, module.mod_manged_identity]
+  source     = "../../Modules/azurerm_key_valut"
+  kv         = var.mod_kv
+  db_connection_string = var.db_connection_string
+}
 
 # module "stg" {
 #   depends_on = [module.rg]
