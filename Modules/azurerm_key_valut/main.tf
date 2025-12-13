@@ -11,8 +11,14 @@ resource "azurerm_key_vault" "key_vault_todoapp" {
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
   enable_rbac_authorization = true
-  public_network_access_enabled = false
+  public_network_access_enabled = true
   sku_name = "standard"
+
+
+  network_acls {
+    default_action = "Deny"
+    bypass         = "AzureServices"
+  }
 
   # access_policy {
   #   tenant_id = data.azurerm_client_config.current.tenant_id
