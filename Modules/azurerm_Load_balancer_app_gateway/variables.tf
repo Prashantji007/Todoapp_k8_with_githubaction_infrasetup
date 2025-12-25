@@ -7,3 +7,7 @@ variable "LB" {
     subnet_name = string
   }))
 }
+
+variable "waf_policy_id" {
+  type = string
+}
