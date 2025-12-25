@@ -177,9 +177,6 @@ variable "mod_firepoll" {
   }))
 }
 
-variable "waf_policy_id" {
-  type = string
-}
 
 variable "mod_managed_identity" {
   type = map(object({
