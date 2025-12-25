@@ -9,5 +9,5 @@ variable "LB" {
 }
 
 variable "waf_policy_id" {
-  type = string
+  type = map(string)
 }

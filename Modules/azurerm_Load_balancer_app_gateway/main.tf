@@ -25,7 +25,7 @@ resource "azurerm_application_gateway" "network" {
   name                = each.value.name
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
-  firewall_policy_id = var.waf_policy_id
+  firewall_policy_id = var.waf_policy_id[each.key]
 
   sku {
     name     = "Standard_v2"
