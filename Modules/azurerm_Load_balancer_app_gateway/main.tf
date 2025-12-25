@@ -78,10 +78,10 @@ resource "azurerm_application_gateway" "network" {
     backend_http_settings_name = "${each.value.virtual_network_name}-be-htst"
   }
 
-   waf_configuration {
-    enabled                  = true
-    firewall_mode            = "Prevention"
-    rule_set_type            = "OWASP"
-    rule_set_version         = "3.2"
-  }
+  #  waf_configuration {
+  #   enabled                  = true
+  #   firewall_mode            = "Prevention"
+  #   rule_set_type            = "OWASP"
+  #   rule_set_version         = "3.2"
+  # }
 }
