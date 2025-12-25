@@ -77,7 +77,7 @@ jobs:
         echo "Running Terratest..."
         cd Test
         go mod tidy
-        go test -v
+        go test -v -timeout 45m
       shell: bash
       
 
