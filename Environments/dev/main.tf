@@ -117,16 +117,16 @@ module "kv" {
 # }
 
 module "LB" {
-  depends_on = [ module.netwokring ]
+  depends_on = [ module.netwokring, module.firewall ]
   source = "../../Modules/azurerm_Load_balancer_app_gateway"
   LB = var.mod_LB
 }
 
-# module "firewall" {
-#   depends_on = [ module.rg ]
-#   source = "../../Modules/azurerm_Firewall_Policy_Rules"
-#   firepoll = var.mod_firepoll
-# }
+module "firewall" {
+  depends_on = [ module.rg ]
+  source = "../../Modules/azurerm_Firewall_Policy_Rules"
+  firepoll = var.mod_firepoll
+}
 
 module "mod_manged_identity" {
   depends_on = [ module.rg ]
