@@ -4,6 +4,12 @@ data "azurerm_user_assigned_identity" "uai" {
   resource_group_name = each.value.resource_group_name
 }
 
+data "azurerm_application_gateway" "data_gateway" {
+  for_each = var.aks
+  name = "LB-App-Gatway"
+  resource_group_name = each.value.resource_group_name
+}
+
 resource "azurerm_kubernetes_cluster" "aks_todoapp" {
     for_each = var.aks
   name                = each.value.aks_name
@@ -26,6 +32,9 @@ network_profile {
     network_plugin = "kubenet"
   }
 
+  ingress_application_gateway {
+    gateway_id = data.azurerm_application_gateway.data_gateway[each.key].id
+  }
   
 
   # identity {
@@ -43,3 +52,11 @@ network_profile {
   tags = each.value.tags
 }
 
+
+
+resource "azurerm_role_assignment" "agic_on_appgw" {
+  for_each = var.aks
+  scope                = data.azurerm_application_gateway.data_gateway[each.key].id
+  role_definition_name = "Contributor"
+  principal_id         = data.azurerm_user_assigned_identity.uai[each.key].principal_id
+}

@@ -7,7 +7,7 @@ module "rg" {
 }
 
 module "aks" {
-  depends_on = [module.rg, module.mod_manged_identity]
+  depends_on = [module.rg, module.mod_manged_identity,module.LB]
   source     = "../../Modules/azurerm_AKS"
   aks        = var.mod_aks
 }
@@ -35,11 +35,11 @@ module "acr" {
 #   }
 # }
 
-# module "netwokring" {
-#   depends_on = [module.rg]
-#   source     = "../../Modules/azurerm_netwroking"
-#   vnet       = var.mod_networking
-# }
+module "netwokring" {
+  depends_on = [module.rg]
+  source     = "../../Modules/azurerm_netwroking"
+  vnet       = var.mod_networking
+}
 
 # module "nsg" {
 #   depends_on = [module.rg, module.netwokring]
@@ -116,11 +116,11 @@ module "kv" {
 #   policy = var.mod_policy
 # }
 
-# module "LB" {
-#   depends_on = [ module.netwokring ]
-#   source = "../../Modules/azurerm_Load_balancer_app_gateway"
-#   LB = var.mod_LB
-# }
+module "LB" {
+  depends_on = [ module.netwokring ]
+  source = "../../Modules/azurerm_Load_balancer_app_gateway"
+  LB = var.mod_LB
+}
 
 # module "firewall" {
 #   depends_on = [ module.rg ]
