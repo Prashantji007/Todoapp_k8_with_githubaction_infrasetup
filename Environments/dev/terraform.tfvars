@@ -240,7 +240,7 @@ mod_LB = {
 }
 
 mod_firepoll = {
-  "policy1" = {
+  "LB1" = {
     name = "firepolicy1"
     location             = "centralindia"
     resource_group_name  = "rg-todoapp-dev"
