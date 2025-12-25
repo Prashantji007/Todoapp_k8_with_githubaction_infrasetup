@@ -8,12 +8,18 @@ import (
 )
 
 func TestInfratodoapp(t *testing.T) {
-	// retryable errors in terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../Environments/dev",
 	})
 
-	defer terraform.Destroy(t, terraformOptions)
+	// ✅ Always destroy, even if panic occurs
+	defer func() {
+		if r := recover(); r != nil {
+			terraform.Destroy(t, terraformOptions)
+			panic(r) // rethrow so test is marked failed
+		}
+		terraform.Destroy(t, terraformOptions)
+	}()
 
 	terraform.InitAndApply(t, terraformOptions)
 
@@ -25,5 +31,4 @@ func TestInfratodoapp(t *testing.T) {
 
 	rgList := terraform.OutputList(t, terraformOptions, "rg_name")
 	assert.Contains(t, rgList, "rg-todoapp-dev")
-
-}	
+}
