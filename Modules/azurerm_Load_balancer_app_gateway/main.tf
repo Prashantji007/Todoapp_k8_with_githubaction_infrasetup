@@ -28,9 +28,9 @@ resource "azurerm_application_gateway" "network" {
   firewall_policy_id = var.waf_policy_id[each.key]
 
   sku {
-    name     = "WAF_v2"
-    tier     = "WAF_v2"
-    capacity = 2
+    name     = "WAF"
+    tier     = "WAF"
+    capacity = 1
   }
 
   gateway_ip_configuration {
