@@ -6,17 +6,17 @@ module "rg" {
   rgs    = var.mod_rgs
 }
 
-module "aks" {
-  depends_on = [module.rg, module.mod_manged_identity,module.LB]
-  source     = "../../Modules/azurerm_AKS"
-  aks        = var.mod_aks
-}
+# module "aks" {
+#   depends_on = [module.rg, module.mod_manged_identity,module.LB]
+#   source     = "../../Modules/azurerm_AKS"
+#   aks        = var.mod_aks
+# }
 
-module "acr" {
-  depends_on = [module.rg]
-  source     = "../../Modules/azurerm_ACR"
-  acr        = var.mod_acr
-}
+# module "acr" {
+#   depends_on = [module.rg]
+#   source     = "../../Modules/azurerm_ACR"
+#   acr        = var.mod_acr
+# }
 
 # module "mssql_server" {
 #   depends_on   = [module.rg]
@@ -35,11 +35,11 @@ module "acr" {
 #   }
 # }
 
-module "netwokring" {
-  depends_on = [module.rg]
-  source     = "../../Modules/azurerm_netwroking"
-  vnet       = var.mod_networking
-}
+# module "netwokring" {
+#   depends_on = [module.rg]
+#   source     = "../../Modules/azurerm_netwroking"
+#   vnet       = var.mod_networking
+# }
 
 # module "nsg" {
 #   depends_on = [module.rg, module.netwokring]
@@ -79,12 +79,12 @@ module "netwokring" {
 
 
 
-module "kv" {
-  depends_on = [module.rg, module.aks, module.mod_manged_identity]
-  source     = "../../Modules/azurerm_key_valut"
-  kv         = var.mod_kv
-  db_connection_string = var.db_connection_string
-}
+# module "kv" {
+#   depends_on = [module.rg, module.aks, module.mod_manged_identity]
+#   source     = "../../Modules/azurerm_key_valut"
+#   kv         = var.mod_kv
+#   db_connection_string = var.db_connection_string
+# }
 
 # module "stg" {
 #   depends_on = [module.rg]
@@ -116,23 +116,23 @@ module "kv" {
 #   policy = var.mod_policy
 # }
 
-module "LB" {
-  depends_on = [ module.netwokring, module.firewall ]
-  source = "../../Modules/azurerm_Load_balancer_app_gateway"
-  LB = var.mod_LB
-  waf_policy_id  = module.firewall.waf_policy_id
+# module "LB" {
+#   depends_on = [ module.netwokring, module.firewall ]
+#   source = "../../Modules/azurerm_Load_balancer_app_gateway"
+#   LB = var.mod_LB
+#   waf_policy_id  = module.firewall.waf_policy_id
  
-}
+# }
 
-module "firewall" {
-  depends_on = [ module.rg ]
-  source = "../../Modules/azurerm_Firewall_Policy_Rules"
-  firepoll = var.mod_firepoll
+# module "firewall" {
+#   depends_on = [ module.rg ]
+#   source = "../../Modules/azurerm_Firewall_Policy_Rules"
+#   firepoll = var.mod_firepoll
 
-}
+# }
 
-module "mod_manged_identity" {
-  depends_on = [ module.rg ]
-  source = "../../Modules/azurerm_managed_identity"
-  managed_identity = var.mod_managed_identity
-}
+# module "mod_manged_identity" {
+#   depends_on = [ module.rg ]
+#   source = "../../Modules/azurerm_managed_identity"
+#   managed_identity = var.mod_managed_identity
+# }
