@@ -21,17 +21,6 @@ mod_aks = {
     uai_name = "aks-uai-dev"
   }
 
-
-    aks2 = {
-    aks_name            = "aks-todoapp-prod01"
-    location            = "centralindia"
-    resource_group_name = "rg-todoapp-dev"
-    tags = {
-      Environment = "Production"
-      Owner       = "Prashant"
-    }
-    uai_name = "aks-uai-dev"
-  }
 }
 
 mod_acr = {
@@ -249,6 +238,15 @@ mod_LB = {
     virtual_network_name = "vnet1"
      subnet_name         = "snet1"
   }
+
+"LB2" = {
+    name = "LB-App-Gatway1"
+    location             = "centralindia"
+    resource_group_name  = "rg-todoapp-dev"
+    virtual_network_name = "vnet1"
+     subnet_name         = "snet1"
+  }
+
 }
 
 mod_firepoll = {
