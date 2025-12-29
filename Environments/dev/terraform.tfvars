@@ -6,6 +6,15 @@ mod_rgs = {
       Environment = "Development"
       Owner       = "Prashant"
     }
+
+  }
+     rg1 = {
+    rg_name  = "rg-todoapp-dev-prod"
+    location = "eastus"
+    tags = {
+      Environment = "production"
+      Owner       = "Prashant"
+    }
   }
 }
 
