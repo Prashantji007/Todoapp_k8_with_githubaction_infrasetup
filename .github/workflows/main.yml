@@ -117,7 +117,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color -input=false 
+      run: terraform plan -no-color -input=false -out=tfplan
       working-directory: Environments/dev
       shell: bash
       env:
@@ -129,6 +129,28 @@ jobs:
         TF_VAR_SSH_Key: ${{ secrets.VM_PUB_SSH_KEY }}
         TF_VAR_db_connection_string: $ {{ secrets.DB_CONNECTION_STRING }}
 
+  infracost:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Infracost
+        uses: infracost/actions/setup@v3
+        with:
+          api-key: ${{ secrets.INFRACOST_API_KEY }}
+
+      - name: Run Infracost diff
+        run: |
+          infracost diff \
+            --path tfplan \
+            --format json \
+            --out-file infracost.json
+
+      - name: Post Infracost comment
+        uses: infracost/actions/comment@v3
+        with:
+          path: infracost.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   terraforminitandapply:
       name: terraform init and apply
