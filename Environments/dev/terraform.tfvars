@@ -7,6 +7,7 @@ mod_rgs = {
       Owner       = "Prashant"
     }
 }
+}
 
 mod_aks = {
   aks1 = {
