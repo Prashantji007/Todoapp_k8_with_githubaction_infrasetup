@@ -176,7 +176,7 @@ variable "mod_firepoll" {
     resource_group_name =  string
   }))
 }
-
+  
 
 variable "mod_managed_identity" {
   type = map(object({
