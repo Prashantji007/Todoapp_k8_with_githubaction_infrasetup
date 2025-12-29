@@ -255,6 +255,12 @@ mod_firepoll = {
     location             = "centralindia"
     resource_group_name  = "rg-todoapp-dev"
   }
+
+   "LB2" = {
+    name = "firepolicy1"
+    location             = "centralindia"
+    resource_group_name  = "rg-todoapp-dev"
+  }
 }
 
 mod_managed_identity = {
