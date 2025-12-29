@@ -132,7 +132,7 @@ jobs:
         TF_VAR_db_connection_string: $ {{ secrets.DB_CONNECTION_STRING }}
 
   infracost:
-    name: Infracost diff
+    name: Infracost cost estimate
     needs: terraforminitandplan
     runs-on: ubuntu-latest
     steps:
@@ -145,7 +145,7 @@ jobs:
 
       - name: Run Infracost diff
         run: |
-          infracost diff \
+          infracost breakdown \
             --path Environments/dev \
             --format json \
             --out-file infracost.json
