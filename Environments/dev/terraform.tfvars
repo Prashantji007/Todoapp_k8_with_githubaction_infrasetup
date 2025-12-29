@@ -6,16 +6,7 @@ mod_rgs = {
       Environment = "Development"
       Owner       = "Prashant"
     }
-
-  }
-     rg2 = {
-    rg_name  = "rg-todoapp-dev-prod"
-    location = "eastus"
-    tags = {
-      Environment = "production"
-      Owner       = "Prashant"
-    }
-  }
+}
 }
 
 mod_aks = {
@@ -29,6 +20,7 @@ mod_aks = {
     }
     uai_name = "aks-uai-dev"
   }
+
 }
 
 mod_acr = {
@@ -155,12 +147,6 @@ mod_stg = {
     location             = "centralindia"
     resource_group_name  = "rg-todoapp-dev"
   }
-
-  "stg" = {
-    name = "storg1678989"
-    location             = "eastus"
-    resource_group_name  = "rg-todoapp-dev"
-  }
 }
 
 mod_logs = {
@@ -252,6 +238,7 @@ mod_LB = {
     virtual_network_name = "vnet1"
      subnet_name         = "snet1"
   }
+
 }
 
 mod_firepoll = {
@@ -260,6 +247,8 @@ mod_firepoll = {
     location             = "centralindia"
     resource_group_name  = "rg-todoapp-dev"
   }
+
+  
 }
 
 mod_managed_identity = {
