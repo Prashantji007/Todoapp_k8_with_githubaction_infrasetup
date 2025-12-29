@@ -145,10 +145,7 @@ jobs:
 
       - name: Run Infracost diff
         run: |
-          infracost breakdown \
-            --path Environments/dev \
-            --format json \
-            --out-file infracost.json
+          infracost breakdown --path Environments/dev
 
       - name: Post Infracost comment
         if: github.event_name == 'pull_request'
