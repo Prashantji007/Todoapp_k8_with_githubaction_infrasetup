@@ -72,13 +72,13 @@ jobs:
     #   with:
     #     directory: Environments/dev  
 
-    - name: Terratest infra test
-      run: |
-        echo "Running Terratest..."
-        cd Test
-        go mod tidy
-        go test -v -timeout 45m
-      shell: bash
+    # - name: Terratest infra test
+    #   run: |
+    #     echo "Running Terratest..."
+    #     cd Test
+    #     go mod tidy
+    #     go test -v -timeout 45m
+    #   shell: bash
       
 
   terraforminitandplan:

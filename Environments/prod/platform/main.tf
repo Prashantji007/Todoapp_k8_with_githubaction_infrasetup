@@ -58,7 +58,7 @@ module "mssql_db" {
 
 module "kv" {
   depends_on = [module.rg, module.aks, module.mod_manged_identity]
-  source     = "../../Modules/azurerm_key_valut"
+  source     = "../../../Modules/azurerm_key_valut"
   kv         = var.mod_kv
   db_connection_string = var.db_connection_string
 }
