@@ -167,9 +167,9 @@ jobs:
       name: terraform init and apply
       #runs-on: raja:rana
       runs-on: ubuntu-latest
-      environment: dev
+      environment: FinOps_Review
       if: github.ref == 'refs/heads/main'
-      needs: terraforminitandplan
+      needs: infracost
 
       steps:
       - name: Checkout repo
