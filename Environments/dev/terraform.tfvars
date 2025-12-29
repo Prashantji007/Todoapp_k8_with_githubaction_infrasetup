@@ -8,7 +8,7 @@ mod_rgs = {
     }
 
   }
-     rg1 = {
+     rg2 = {
     rg_name  = "rg-todoapp-dev-prod"
     location = "eastus"
     tags = {
@@ -153,6 +153,12 @@ mod_stg = {
   "stg1" = {
     name = "storg167"
     location             = "centralindia"
+    resource_group_name  = "rg-todoapp-dev"
+  }
+
+  "stg" = {
+    name = "storg1678989"
+    location             = "eastus"
     resource_group_name  = "rg-todoapp-dev"
   }
 }

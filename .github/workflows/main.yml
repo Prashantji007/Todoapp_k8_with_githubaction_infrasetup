@@ -154,7 +154,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           infracost comment github \
-            --path infracost.json \
+            --path Environments/dev \
             --repo $GITHUB_REPOSITORY \
             --pull-request $PR_NUMBER \
             --github-token $GITHUB_TOKEN \
