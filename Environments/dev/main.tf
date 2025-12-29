@@ -8,7 +8,7 @@ module "rg" {
 
 module "aks" {
   #depends_on = [module.rg, module.mod_manged_identity,module.LB]
-  depends_on = [module.rg]
+  depends_on = [module.rg, module.mod_manged_identity]
   source     = "../../Modules/azurerm_AKS"
   aks        = var.mod_aks
 }
@@ -132,8 +132,8 @@ module "acr" {
 
 # }
 
-# module "mod_manged_identity" {
-#   depends_on = [ module.rg ]
-#   source = "../../Modules/azurerm_managed_identity"
-#   managed_identity = var.mod_managed_identity
-# }
+module "mod_manged_identity" {
+  depends_on = [ module.rg ]
+  source = "../../Modules/azurerm_managed_identity"
+  managed_identity = var.mod_managed_identity
+}
