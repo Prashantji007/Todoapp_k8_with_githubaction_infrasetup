@@ -145,7 +145,7 @@ jobs:
 
       - name: Run Infracost diff
         run: |
-          infracost breakdown --path Environments/dev
+          infracost breakdown --path Environments/dev --format json --out-file infracost.json 
 
       - name: Post Infracost comment
         if: github.event_name == 'pull_request'
@@ -154,7 +154,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           infracost comment github \
-            --path Environments/dev \
+            --path infracost.json \
             --repo $GITHUB_REPOSITORY \
             --pull-request $PR_NUMBER \
             --github-token $GITHUB_TOKEN \
