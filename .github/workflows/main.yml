@@ -191,6 +191,7 @@ jobs:
 
         # ✅ PR pe DIFF comment
       - name: Infracost PR diff comment
+        working-directory: Environments/dev
         if: github.event_name == 'pull_request'
         run: |
           infracost diff \
@@ -200,6 +201,7 @@ jobs:
 
       # ✅ PR pe breakdown + diff dono comment me
       - name: Post Infracost PR comment
+        working-directory: Environments/dev
         if: github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
