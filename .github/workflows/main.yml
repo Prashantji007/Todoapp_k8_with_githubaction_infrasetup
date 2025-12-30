@@ -174,9 +174,16 @@ jobs:
         with:
           api-key: ${{ secrets.INFRACOST_API_KEY }}
 
+      - name: Download terraform plan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+          path: Environments/dev
+
+
       - name: Convert terraform plan to JSON
         run: |
-          terraform show -json Environments/dev/plan.out > plan.json
+          terraform show -json plan.out > plan.json
 
         # ✅ PR pe DIFF comment
       - name: Infracost PR diff comment
