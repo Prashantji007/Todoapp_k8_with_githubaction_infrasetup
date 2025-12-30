@@ -119,7 +119,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color -input=false -out=plan.json
+      run: terraform plan -no-color -input=false -out=plan.out
       working-directory: Environments/dev
       shell: bash
       env:
@@ -135,7 +135,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: tfplan
-        path: Environments/dev/plan.json
+        path: Environments/dev/plan.out
 
 
   infracost:
@@ -176,7 +176,7 @@ jobs:
 
       - name: Convert terraform plan to JSON
         run: |
-          terraform show -json Environments/dev/plan.json > plan.json
+          terraform show -json Environments/dev/plan.out > plan.json
 
         # ✅ PR pe DIFF comment
       - name: Infracost PR diff comment
