@@ -214,6 +214,7 @@ jobs:
 
       # ✅ main / push pe sirf breakdown (no comment)
       - name: Infracost breakdown (main branch)
+        working-directory: Environments/dev
         if: github.ref == 'refs/heads/main'
         run: |
           infracost breakdown \
