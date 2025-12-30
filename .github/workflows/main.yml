@@ -119,7 +119,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color -input=false 
+      run: terraform plan -no-color -input=false -out=plan.json
       working-directory: Environments/dev
       shell: bash
       env:
@@ -130,6 +130,13 @@ jobs:
         ARM_USE_OIDC: true
         TF_VAR_SSH_Key: ${{ secrets.VM_PUB_SSH_KEY }}
         TF_VAR_db_connection_string: $ {{ secrets.DB_CONNECTION_STRING }}
+    
+    - name: Upload terraform plan
+      uses: actions/upload-artifact@v4
+      with:
+        name: tfplan
+        path: Environments/dev/plan.json
+
 
   infracost:
     name: Infracost cost estimate
@@ -138,28 +145,71 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Azure Login
+        uses: Azure/login@v2.3.0
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+              
+
+      - name: Setup Terraform (required for terraform show)
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.6"
+
+      - name: Terraform Init (required for terraform show)
+        id: init
+        run: terraform init -input=false
+        working-directory: Environments/dev
+        shell: bash
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_USE_OIDC: true
+
       - name: Setup Infracost
         uses: infracost/actions/setup@v3
         with:
           api-key: ${{ secrets.INFRACOST_API_KEY }}
 
-      - name: Run Infracost diff
+      - name: Convert terraform plan to JSON
         run: |
-          infracost breakdown --path Environments/dev --format json --out-file infracost.json 
+          terraform show -json Environments/dev/plan.json > plan.json
 
-      - name: Post Infracost comment
+        # ✅ PR pe DIFF comment
+      - name: Infracost PR diff comment
+        if: github.event_name == 'pull_request'
+        run: |
+          infracost diff \
+            --path plan.json \
+            --format json \
+            --out-file infracost-diff.json
+
+      # ✅ PR pe breakdown + diff dono comment me
+      - name: Post Infracost PR comment
         if: github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           infracost comment github \
-            --path infracost.json \
+            --path infracost-diff.json \
             --repo $GITHUB_REPOSITORY \
             --pull-request $PR_NUMBER \
             --github-token $GITHUB_TOKEN \
             --behavior update
 
+      # ✅ main / push pe sirf breakdown (no comment)
+      - name: Infracost breakdown (main branch)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          infracost breakdown \
+            --path plan.json \
+            --format table
+
+     
   terraforminitandapply:
       name: terraform init and apply
       #runs-on: raja:rana
