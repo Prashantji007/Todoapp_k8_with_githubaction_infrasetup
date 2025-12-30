@@ -20,7 +20,7 @@ resource "azurerm_kubernetes_cluster" "aks_todoapp" {
 
     default_node_pool {
       name       = "todonp"
-      node_count = 2
+      node_count = 1
       vm_size    = "Standard_B2ms"
       temporary_name_for_rotation = "tempnodepool"  
       os_disk_size_gb = 30
