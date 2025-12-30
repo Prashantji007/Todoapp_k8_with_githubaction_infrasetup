@@ -176,7 +176,7 @@ jobs:
 
       - name: Convert terraform plan to JSON
         run: |
-          terraform show -json Environments/dev/plan.out > plan.json
+          terraform show -json Environments/dev/plan.json > plan.json
 
         # ✅ PR pe DIFF comment
       - name: Infracost PR diff comment
