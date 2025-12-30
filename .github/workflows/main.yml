@@ -136,6 +136,8 @@ jobs:
       with:
         name: tfplan
         path: Environments/dev/plan.out
+        if-no-files-found: error
+
 
 
   infracost:
@@ -179,9 +181,11 @@ jobs:
         with:
           name: tfplan
           path: Environments/dev
+        
 
 
       - name: Convert terraform plan to JSON
+        working-directory: Environments/dev
         run: |
           terraform show -json plan.out > plan.json
 
