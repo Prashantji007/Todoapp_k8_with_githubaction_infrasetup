@@ -12,6 +12,7 @@ terraform {
     storage_account_name = "todoterraformstate"
     container_name       = "tfstate"
     key                  = "infra/terraform.tfstate"
+    use_oidc             = true
   }
  required_version = ">=1.0"
 }
