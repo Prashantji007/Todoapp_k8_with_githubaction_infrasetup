@@ -119,7 +119,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color -input=false 
+      run: terraform plan -no-color -input=false --out=plan.out
       working-directory: Environments/dev
       shell: bash
       env:
@@ -144,6 +144,12 @@ jobs:
           api-key: ${{ secrets.INFRACOST_API_KEY }}
 
       - name: Run Infracost diff
+        if: github.event_name == 'pull_request'
+        run: |
+          infracost breakdown --path Environments/dev --format diff --compare-to-plan-file Environments/dev/plan.out
+
+      - name: Run Infracost diff
+        if: github.event_name == 'pull_request'
         run: |
           infracost breakdown --path Environments/dev --format json --out-file infracost.json 
 
