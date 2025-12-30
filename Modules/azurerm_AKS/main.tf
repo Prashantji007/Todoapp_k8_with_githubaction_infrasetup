@@ -54,9 +54,9 @@ network_profile {
 
 
 
-resource "azurerm_role_assignment" "agic_on_appgw" {
-  for_each = var.aks
-  scope                = data.azurerm_application_gateway.data_gateway[each.key].id
-  role_definition_name = "Contributor"
-  principal_id         = data.azurerm_user_assigned_identity.uai[each.key].principal_id
-}
+# resource "azurerm_role_assignment" "agic_on_appgw" {
+#   for_each = var.aks
+#   scope                = data.azurerm_application_gateway.data_gateway[each.key].id
+#   role_definition_name = "Contributor"
+#   principal_id         = data.azurerm_user_assigned_identity.uai[each.key].principal_id
+# }
