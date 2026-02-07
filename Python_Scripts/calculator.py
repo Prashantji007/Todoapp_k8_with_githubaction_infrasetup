@@ -1,3 +1,5 @@
+from Advanced_calcukator import addition, subtraction
+
 num1 = int(input("enter first number: "))
 num2 = int(input("enter second number: ")) #string to int type casting
 
@@ -19,3 +21,6 @@ print("product of 2 num:",product)
 div = num1 / num2
 
 print("div of 2 num:",div)
+
+print(addition(23, 45))
+print(subtraction(50, 20))
